@@ -57,7 +57,7 @@ ret=0
 
 function gen() {
     base_name=$(basename $1 ".proto")
-    protoc -I.:${GOGO_ROOT}:../include --gofast_out=plugins=grpc,$GO_OUT_M:../pkg/$base_name $1 || ret=$?
+    protoc -I.:${GOGO_ROOT}:../include:../protoc/include --gofast_out=plugins=grpc,$GO_OUT_M:../pkg/$base_name $1 || ret=$?
     cd ../pkg/$base_name
     sed -i.bak -E 's/import _ \"gogoproto\"//g' *.pb.go
     sed -i.bak -E 's/import fmt \"fmt\"//g' *.pb.go

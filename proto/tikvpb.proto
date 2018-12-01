@@ -39,6 +39,7 @@ service Tikv {
     rpc RawScan(kvrpcpb.RawScanRequest) returns (kvrpcpb.RawScanResponse) {}
     rpc RawDeleteRange(kvrpcpb.RawDeleteRangeRequest) returns (kvrpcpb.RawDeleteRangeResponse) {}
     rpc RawBatchScan(kvrpcpb.RawBatchScanRequest) returns (kvrpcpb.RawBatchScanResponse) {}
+    rpc RawEval(kvrpcpb.RawEvalRequest) returns (kvrpcpb.RawEvalResponse) {}
 
     // Store commands (to the whole tikv but not a certain region)
     rpc UnsafeDestroyRange(kvrpcpb.UnsafeDestroyRangeRequest) returns (kvrpcpb.UnsafeDestroyRangeResponse) {}

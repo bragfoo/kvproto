@@ -165,6 +165,13 @@ const METHOD_TIKV_RAW_BATCH_SCAN: ::grpcio::Method<super::kvrpcpb::RawBatchScanR
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+const METHOD_TIKV_RAW_EVAL: ::grpcio::Method<super::kvrpcpb::RawEvalRequest, super::kvrpcpb::RawEvalResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/tikvpb.Tikv/RawEval",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
 const METHOD_TIKV_UNSAFE_DESTROY_RANGE: ::grpcio::Method<super::kvrpcpb::UnsafeDestroyRangeRequest, super::kvrpcpb::UnsafeDestroyRangeResponse> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
     name: "/tikvpb.Tikv/UnsafeDestroyRange",
@@ -568,6 +575,22 @@ impl TikvClient {
         self.raw_batch_scan_async_opt(req, ::grpcio::CallOption::default())
     }
 
+    pub fn raw_eval_opt(&self, req: &super::kvrpcpb::RawEvalRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::RawEvalResponse> {
+        self.client.unary_call(&METHOD_TIKV_RAW_EVAL, req, opt)
+    }
+
+    pub fn raw_eval(&self, req: &super::kvrpcpb::RawEvalRequest) -> ::grpcio::Result<super::kvrpcpb::RawEvalResponse> {
+        self.raw_eval_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn raw_eval_async_opt(&self, req: &super::kvrpcpb::RawEvalRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::kvrpcpb::RawEvalResponse>> {
+        self.client.unary_call_async(&METHOD_TIKV_RAW_EVAL, req, opt)
+    }
+
+    pub fn raw_eval_async(&self, req: &super::kvrpcpb::RawEvalRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::kvrpcpb::RawEvalResponse>> {
+        self.raw_eval_async_opt(req, ::grpcio::CallOption::default())
+    }
+
     pub fn unsafe_destroy_range_opt(&self, req: &super::kvrpcpb::UnsafeDestroyRangeRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::UnsafeDestroyRangeResponse> {
         self.client.unary_call(&METHOD_TIKV_UNSAFE_DESTROY_RANGE, req, opt)
     }
@@ -698,6 +721,7 @@ pub trait Tikv {
     fn raw_scan(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawScanRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawScanResponse>);
     fn raw_delete_range(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawDeleteRangeRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawDeleteRangeResponse>);
     fn raw_batch_scan(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawBatchScanRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawBatchScanResponse>);
+    fn raw_eval(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawEvalRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawEvalResponse>);
     fn unsafe_destroy_range(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::UnsafeDestroyRangeRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::UnsafeDestroyRangeResponse>);
     fn coprocessor(&mut self, ctx: ::grpcio::RpcContext, req: super::coprocessor::Request, sink: ::grpcio::UnarySink<super::coprocessor::Response>);
     fn coprocessor_stream(&mut self, ctx: ::grpcio::RpcContext, req: super::coprocessor::Request, sink: ::grpcio::ServerStreamingSink<super::coprocessor::Response>);
@@ -793,6 +817,10 @@ pub fn create_tikv<S: Tikv + Send + Clone + 'static>(s: S) -> ::grpcio::Service 
     let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_RAW_BATCH_SCAN, move |ctx, req, resp| {
         instance.raw_batch_scan(ctx, req, resp)
+    });
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_TIKV_RAW_EVAL, move |ctx, req, resp| {
+        instance.raw_eval(ctx, req, resp)
     });
     let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_UNSAFE_DESTROY_RANGE, move |ctx, req, resp| {
