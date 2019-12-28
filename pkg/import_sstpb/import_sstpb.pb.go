@@ -12,6 +12,8 @@ import (
 
 	_ "github.com/gogo/protobuf/gogoproto"
 
+	backup "github.com/pingcap/kvproto/pkg/backup"
+
 	errorpb "github.com/pingcap/kvproto/pkg/errorpb"
 
 	kvrpcpb "github.com/pingcap/kvproto/pkg/kvrpcpb"
@@ -54,7 +56,7 @@ func (x SwitchMode) String() string {
 	return proto.EnumName(SwitchMode_name, int32(x))
 }
 func (SwitchMode) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_1b0c88c930fc0d22, []int{0}
+	return fileDescriptor_import_sstpb_7a221d02cea2795a, []int{0}
 }
 
 type SwitchModeRequest struct {
@@ -68,7 +70,7 @@ func (m *SwitchModeRequest) Reset()         { *m = SwitchModeRequest{} }
 func (m *SwitchModeRequest) String() string { return proto.CompactTextString(m) }
 func (*SwitchModeRequest) ProtoMessage()    {}
 func (*SwitchModeRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_1b0c88c930fc0d22, []int{0}
+	return fileDescriptor_import_sstpb_7a221d02cea2795a, []int{0}
 }
 func (m *SwitchModeRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -114,7 +116,7 @@ func (m *SwitchModeResponse) Reset()         { *m = SwitchModeResponse{} }
 func (m *SwitchModeResponse) String() string { return proto.CompactTextString(m) }
 func (*SwitchModeResponse) ProtoMessage()    {}
 func (*SwitchModeResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_1b0c88c930fc0d22, []int{1}
+	return fileDescriptor_import_sstpb_7a221d02cea2795a, []int{1}
 }
 func (m *SwitchModeResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -155,7 +157,7 @@ func (m *Range) Reset()         { *m = Range{} }
 func (m *Range) String() string { return proto.CompactTextString(m) }
 func (*Range) ProtoMessage()    {}
 func (*Range) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_1b0c88c930fc0d22, []int{2}
+	return fileDescriptor_import_sstpb_7a221d02cea2795a, []int{2}
 }
 func (m *Range) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -215,7 +217,7 @@ func (m *SSTMeta) Reset()         { *m = SSTMeta{} }
 func (m *SSTMeta) String() string { return proto.CompactTextString(m) }
 func (*SSTMeta) ProtoMessage()    {}
 func (*SSTMeta) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_1b0c88c930fc0d22, []int{3}
+	return fileDescriptor_import_sstpb_7a221d02cea2795a, []int{3}
 }
 func (m *SSTMeta) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -293,6 +295,71 @@ func (m *SSTMeta) GetRegionEpoch() *metapb.RegionEpoch {
 	return nil
 }
 
+// A rewrite rule is applied on the *encoded* keys (the internal storage
+// representation).
+type RewriteRule struct {
+	OldKeyPrefix         []byte   `protobuf:"bytes,1,opt,name=old_key_prefix,json=oldKeyPrefix,proto3" json:"old_key_prefix,omitempty"`
+	NewKeyPrefix         []byte   `protobuf:"bytes,2,opt,name=new_key_prefix,json=newKeyPrefix,proto3" json:"new_key_prefix,omitempty"`
+	NewTimestamp         uint64   `protobuf:"varint,3,opt,name=new_timestamp,json=newTimestamp,proto3" json:"new_timestamp,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *RewriteRule) Reset()         { *m = RewriteRule{} }
+func (m *RewriteRule) String() string { return proto.CompactTextString(m) }
+func (*RewriteRule) ProtoMessage()    {}
+func (*RewriteRule) Descriptor() ([]byte, []int) {
+	return fileDescriptor_import_sstpb_7a221d02cea2795a, []int{4}
+}
+func (m *RewriteRule) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *RewriteRule) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_RewriteRule.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (dst *RewriteRule) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RewriteRule.Merge(dst, src)
+}
+func (m *RewriteRule) XXX_Size() int {
+	return m.Size()
+}
+func (m *RewriteRule) XXX_DiscardUnknown() {
+	xxx_messageInfo_RewriteRule.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_RewriteRule proto.InternalMessageInfo
+
+func (m *RewriteRule) GetOldKeyPrefix() []byte {
+	if m != nil {
+		return m.OldKeyPrefix
+	}
+	return nil
+}
+
+func (m *RewriteRule) GetNewKeyPrefix() []byte {
+	if m != nil {
+		return m.NewKeyPrefix
+	}
+	return nil
+}
+
+func (m *RewriteRule) GetNewTimestamp() uint64 {
+	if m != nil {
+		return m.NewTimestamp
+	}
+	return 0
+}
+
 type UploadRequest struct {
 	// Types that are valid to be assigned to Chunk:
 	//	*UploadRequest_Meta
@@ -307,7 +374,7 @@ func (m *UploadRequest) Reset()         { *m = UploadRequest{} }
 func (m *UploadRequest) String() string { return proto.CompactTextString(m) }
 func (*UploadRequest) ProtoMessage()    {}
 func (*UploadRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_1b0c88c930fc0d22, []int{4}
+	return fileDescriptor_import_sstpb_7a221d02cea2795a, []int{5}
 }
 func (m *UploadRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -453,7 +520,7 @@ func (m *UploadResponse) Reset()         { *m = UploadResponse{} }
 func (m *UploadResponse) String() string { return proto.CompactTextString(m) }
 func (*UploadResponse) ProtoMessage()    {}
 func (*UploadResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_1b0c88c930fc0d22, []int{5}
+	return fileDescriptor_import_sstpb_7a221d02cea2795a, []int{6}
 }
 func (m *UploadResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -494,7 +561,7 @@ func (m *IngestRequest) Reset()         { *m = IngestRequest{} }
 func (m *IngestRequest) String() string { return proto.CompactTextString(m) }
 func (*IngestRequest) ProtoMessage()    {}
 func (*IngestRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_1b0c88c930fc0d22, []int{6}
+	return fileDescriptor_import_sstpb_7a221d02cea2795a, []int{7}
 }
 func (m *IngestRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -548,7 +615,7 @@ func (m *IngestResponse) Reset()         { *m = IngestResponse{} }
 func (m *IngestResponse) String() string { return proto.CompactTextString(m) }
 func (*IngestResponse) ProtoMessage()    {}
 func (*IngestResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_1b0c88c930fc0d22, []int{7}
+	return fileDescriptor_import_sstpb_7a221d02cea2795a, []int{8}
 }
 func (m *IngestResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -599,7 +666,7 @@ func (m *CompactRequest) Reset()         { *m = CompactRequest{} }
 func (m *CompactRequest) String() string { return proto.CompactTextString(m) }
 func (*CompactRequest) ProtoMessage()    {}
 func (*CompactRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_1b0c88c930fc0d22, []int{8}
+	return fileDescriptor_import_sstpb_7a221d02cea2795a, []int{9}
 }
 func (m *CompactRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -652,7 +719,7 @@ func (m *CompactResponse) Reset()         { *m = CompactResponse{} }
 func (m *CompactResponse) String() string { return proto.CompactTextString(m) }
 func (*CompactResponse) ProtoMessage()    {}
 func (*CompactResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_import_sstpb_1b0c88c930fc0d22, []int{9}
+	return fileDescriptor_import_sstpb_7a221d02cea2795a, []int{10}
 }
 func (m *CompactResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -681,17 +748,257 @@ func (m *CompactResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_CompactResponse proto.InternalMessageInfo
 
+type DownloadRequest struct {
+	// The SST meta used to identify the downloaded file.
+	// Must be the same among all nodes in the same Raft group.
+	// Note: the "crc32" and "cf_name" fields are ignored in this request,
+	// and the "range" field represents the closed key range after rewrite
+	// (as origin keys in encoded representation).
+	Sst SSTMeta `protobuf:"bytes,2,opt,name=sst" json:"sst"`
+	// The file name of the SST file.
+	Name string `protobuf:"bytes,9,opt,name=name,proto3" json:"name,omitempty"`
+	// Performs a key prefix rewrite after downloading the SST file.
+	// All keys in the SST will be rewritten as:
+	//
+	//  new_key = new_key_prefix + old_key[len(old_key_prefix)..]
+	//
+	// When used for TiDB, rewriting the prefix changes the table ID. Please
+	// note that key-rewrite is applied on the origin keys in encoded
+	// representation (the SST itself should still use data keys in encoded
+	// representation).
+	//
+	// You need to ensure that the keys before and after rewriting are in the
+	// same order, otherwise the RPC request will fail.
+	RewriteRule          RewriteRule            `protobuf:"bytes,13,opt,name=rewrite_rule,json=rewriteRule" json:"rewrite_rule"`
+	StorageBackend       *backup.StorageBackend `protobuf:"bytes,14,opt,name=storage_backend,json=storageBackend" json:"storage_backend,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}               `json:"-"`
+	XXX_unrecognized     []byte                 `json:"-"`
+	XXX_sizecache        int32                  `json:"-"`
+}
+
+func (m *DownloadRequest) Reset()         { *m = DownloadRequest{} }
+func (m *DownloadRequest) String() string { return proto.CompactTextString(m) }
+func (*DownloadRequest) ProtoMessage()    {}
+func (*DownloadRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_import_sstpb_7a221d02cea2795a, []int{11}
+}
+func (m *DownloadRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *DownloadRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_DownloadRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (dst *DownloadRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DownloadRequest.Merge(dst, src)
+}
+func (m *DownloadRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *DownloadRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_DownloadRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DownloadRequest proto.InternalMessageInfo
+
+func (m *DownloadRequest) GetSst() SSTMeta {
+	if m != nil {
+		return m.Sst
+	}
+	return SSTMeta{}
+}
+
+func (m *DownloadRequest) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *DownloadRequest) GetRewriteRule() RewriteRule {
+	if m != nil {
+		return m.RewriteRule
+	}
+	return RewriteRule{}
+}
+
+func (m *DownloadRequest) GetStorageBackend() *backup.StorageBackend {
+	if m != nil {
+		return m.StorageBackend
+	}
+	return nil
+}
+
+type DownloadResponse struct {
+	// The actual key range (after rewrite) of the downloaded SST. The range is
+	// inclusive in both ends.
+	Range Range `protobuf:"bytes,1,opt,name=range" json:"range"`
+	// Whether the SST is empty. An empty SST is prohibited in TiKV, do not
+	// ingest if this field is true.
+	IsEmpty              bool     `protobuf:"varint,2,opt,name=is_empty,json=isEmpty,proto3" json:"is_empty,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *DownloadResponse) Reset()         { *m = DownloadResponse{} }
+func (m *DownloadResponse) String() string { return proto.CompactTextString(m) }
+func (*DownloadResponse) ProtoMessage()    {}
+func (*DownloadResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_import_sstpb_7a221d02cea2795a, []int{12}
+}
+func (m *DownloadResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *DownloadResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_DownloadResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (dst *DownloadResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DownloadResponse.Merge(dst, src)
+}
+func (m *DownloadResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *DownloadResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_DownloadResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_DownloadResponse proto.InternalMessageInfo
+
+func (m *DownloadResponse) GetRange() Range {
+	if m != nil {
+		return m.Range
+	}
+	return Range{}
+}
+
+func (m *DownloadResponse) GetIsEmpty() bool {
+	if m != nil {
+		return m.IsEmpty
+	}
+	return false
+}
+
+type SetDownloadSpeedLimitRequest struct {
+	// The download speed limit (bytes/second). Set to 0 for unlimited speed.
+	SpeedLimit           uint64   `protobuf:"varint,1,opt,name=speed_limit,json=speedLimit,proto3" json:"speed_limit,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *SetDownloadSpeedLimitRequest) Reset()         { *m = SetDownloadSpeedLimitRequest{} }
+func (m *SetDownloadSpeedLimitRequest) String() string { return proto.CompactTextString(m) }
+func (*SetDownloadSpeedLimitRequest) ProtoMessage()    {}
+func (*SetDownloadSpeedLimitRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_import_sstpb_7a221d02cea2795a, []int{13}
+}
+func (m *SetDownloadSpeedLimitRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SetDownloadSpeedLimitRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SetDownloadSpeedLimitRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (dst *SetDownloadSpeedLimitRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SetDownloadSpeedLimitRequest.Merge(dst, src)
+}
+func (m *SetDownloadSpeedLimitRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *SetDownloadSpeedLimitRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_SetDownloadSpeedLimitRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SetDownloadSpeedLimitRequest proto.InternalMessageInfo
+
+func (m *SetDownloadSpeedLimitRequest) GetSpeedLimit() uint64 {
+	if m != nil {
+		return m.SpeedLimit
+	}
+	return 0
+}
+
+type SetDownloadSpeedLimitResponse struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *SetDownloadSpeedLimitResponse) Reset()         { *m = SetDownloadSpeedLimitResponse{} }
+func (m *SetDownloadSpeedLimitResponse) String() string { return proto.CompactTextString(m) }
+func (*SetDownloadSpeedLimitResponse) ProtoMessage()    {}
+func (*SetDownloadSpeedLimitResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_import_sstpb_7a221d02cea2795a, []int{14}
+}
+func (m *SetDownloadSpeedLimitResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SetDownloadSpeedLimitResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SetDownloadSpeedLimitResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (dst *SetDownloadSpeedLimitResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SetDownloadSpeedLimitResponse.Merge(dst, src)
+}
+func (m *SetDownloadSpeedLimitResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *SetDownloadSpeedLimitResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_SetDownloadSpeedLimitResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SetDownloadSpeedLimitResponse proto.InternalMessageInfo
+
 func init() {
 	proto.RegisterType((*SwitchModeRequest)(nil), "import_sstpb.SwitchModeRequest")
 	proto.RegisterType((*SwitchModeResponse)(nil), "import_sstpb.SwitchModeResponse")
 	proto.RegisterType((*Range)(nil), "import_sstpb.Range")
 	proto.RegisterType((*SSTMeta)(nil), "import_sstpb.SSTMeta")
+	proto.RegisterType((*RewriteRule)(nil), "import_sstpb.RewriteRule")
 	proto.RegisterType((*UploadRequest)(nil), "import_sstpb.UploadRequest")
 	proto.RegisterType((*UploadResponse)(nil), "import_sstpb.UploadResponse")
 	proto.RegisterType((*IngestRequest)(nil), "import_sstpb.IngestRequest")
 	proto.RegisterType((*IngestResponse)(nil), "import_sstpb.IngestResponse")
 	proto.RegisterType((*CompactRequest)(nil), "import_sstpb.CompactRequest")
 	proto.RegisterType((*CompactResponse)(nil), "import_sstpb.CompactResponse")
+	proto.RegisterType((*DownloadRequest)(nil), "import_sstpb.DownloadRequest")
+	proto.RegisterType((*DownloadResponse)(nil), "import_sstpb.DownloadResponse")
+	proto.RegisterType((*SetDownloadSpeedLimitRequest)(nil), "import_sstpb.SetDownloadSpeedLimitRequest")
+	proto.RegisterType((*SetDownloadSpeedLimitResponse)(nil), "import_sstpb.SetDownloadSpeedLimitResponse")
 	proto.RegisterEnum("import_sstpb.SwitchMode", SwitchMode_name, SwitchMode_value)
 }
 
@@ -714,6 +1021,10 @@ type ImportSSTClient interface {
 	Ingest(ctx context.Context, in *IngestRequest, opts ...grpc.CallOption) (*IngestResponse, error)
 	// Compact the specific range for better performance.
 	Compact(ctx context.Context, in *CompactRequest, opts ...grpc.CallOption) (*CompactResponse, error)
+	SetDownloadSpeedLimit(ctx context.Context, in *SetDownloadSpeedLimitRequest, opts ...grpc.CallOption) (*SetDownloadSpeedLimitResponse, error)
+	// Download an SST file from an external storage, and performs key-rewrite
+	// after downloading.
+	Download(ctx context.Context, in *DownloadRequest, opts ...grpc.CallOption) (*DownloadResponse, error)
 }
 
 type importSSTClient struct {
@@ -785,6 +1096,24 @@ func (c *importSSTClient) Compact(ctx context.Context, in *CompactRequest, opts 
 	return out, nil
 }
 
+func (c *importSSTClient) SetDownloadSpeedLimit(ctx context.Context, in *SetDownloadSpeedLimitRequest, opts ...grpc.CallOption) (*SetDownloadSpeedLimitResponse, error) {
+	out := new(SetDownloadSpeedLimitResponse)
+	err := c.cc.Invoke(ctx, "/import_sstpb.ImportSST/SetDownloadSpeedLimit", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *importSSTClient) Download(ctx context.Context, in *DownloadRequest, opts ...grpc.CallOption) (*DownloadResponse, error) {
+	out := new(DownloadResponse)
+	err := c.cc.Invoke(ctx, "/import_sstpb.ImportSST/Download", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for ImportSST service
 
 type ImportSSTServer interface {
@@ -796,6 +1125,10 @@ type ImportSSTServer interface {
 	Ingest(context.Context, *IngestRequest) (*IngestResponse, error)
 	// Compact the specific range for better performance.
 	Compact(context.Context, *CompactRequest) (*CompactResponse, error)
+	SetDownloadSpeedLimit(context.Context, *SetDownloadSpeedLimitRequest) (*SetDownloadSpeedLimitResponse, error)
+	// Download an SST file from an external storage, and performs key-rewrite
+	// after downloading.
+	Download(context.Context, *DownloadRequest) (*DownloadResponse, error)
 }
 
 func RegisterImportSSTServer(s *grpc.Server, srv ImportSSTServer) {
@@ -882,6 +1215,42 @@ func _ImportSST_Compact_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ImportSST_SetDownloadSpeedLimit_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetDownloadSpeedLimitRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ImportSSTServer).SetDownloadSpeedLimit(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/import_sstpb.ImportSST/SetDownloadSpeedLimit",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ImportSSTServer).SetDownloadSpeedLimit(ctx, req.(*SetDownloadSpeedLimitRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ImportSST_Download_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DownloadRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ImportSSTServer).Download(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/import_sstpb.ImportSST/Download",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ImportSSTServer).Download(ctx, req.(*DownloadRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _ImportSST_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "import_sstpb.ImportSST",
 	HandlerType: (*ImportSSTServer)(nil),
@@ -897,6 +1266,14 @@ var _ImportSST_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Compact",
 			Handler:    _ImportSST_Compact_Handler,
+		},
+		{
+			MethodName: "SetDownloadSpeedLimit",
+			Handler:    _ImportSST_SetDownloadSpeedLimit_Handler,
+		},
+		{
+			MethodName: "Download",
+			Handler:    _ImportSST_Download_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
@@ -1050,6 +1427,44 @@ func (m *SSTMeta) MarshalTo(dAtA []byte) (int, error) {
 			return 0, err
 		}
 		i += n2
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
+func (m *RewriteRule) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *RewriteRule) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.OldKeyPrefix) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintImportSstpb(dAtA, i, uint64(len(m.OldKeyPrefix)))
+		i += copy(dAtA[i:], m.OldKeyPrefix)
+	}
+	if len(m.NewKeyPrefix) > 0 {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintImportSstpb(dAtA, i, uint64(len(m.NewKeyPrefix)))
+		i += copy(dAtA[i:], m.NewKeyPrefix)
+	}
+	if m.NewTimestamp != 0 {
+		dAtA[i] = 0x18
+		i++
+		i = encodeVarintImportSstpb(dAtA, i, uint64(m.NewTimestamp))
 	}
 	if m.XXX_unrecognized != nil {
 		i += copy(dAtA[i:], m.XXX_unrecognized)
@@ -1259,6 +1674,145 @@ func (m *CompactResponse) MarshalTo(dAtA []byte) (int, error) {
 	return i, nil
 }
 
+func (m *DownloadRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *DownloadRequest) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	dAtA[i] = 0x12
+	i++
+	i = encodeVarintImportSstpb(dAtA, i, uint64(m.Sst.Size()))
+	n9, err := m.Sst.MarshalTo(dAtA[i:])
+	if err != nil {
+		return 0, err
+	}
+	i += n9
+	if len(m.Name) > 0 {
+		dAtA[i] = 0x4a
+		i++
+		i = encodeVarintImportSstpb(dAtA, i, uint64(len(m.Name)))
+		i += copy(dAtA[i:], m.Name)
+	}
+	dAtA[i] = 0x6a
+	i++
+	i = encodeVarintImportSstpb(dAtA, i, uint64(m.RewriteRule.Size()))
+	n10, err := m.RewriteRule.MarshalTo(dAtA[i:])
+	if err != nil {
+		return 0, err
+	}
+	i += n10
+	if m.StorageBackend != nil {
+		dAtA[i] = 0x72
+		i++
+		i = encodeVarintImportSstpb(dAtA, i, uint64(m.StorageBackend.Size()))
+		n11, err := m.StorageBackend.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n11
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
+func (m *DownloadResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *DownloadResponse) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	dAtA[i] = 0xa
+	i++
+	i = encodeVarintImportSstpb(dAtA, i, uint64(m.Range.Size()))
+	n12, err := m.Range.MarshalTo(dAtA[i:])
+	if err != nil {
+		return 0, err
+	}
+	i += n12
+	if m.IsEmpty {
+		dAtA[i] = 0x10
+		i++
+		if m.IsEmpty {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i++
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
+func (m *SetDownloadSpeedLimitRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SetDownloadSpeedLimitRequest) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.SpeedLimit != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintImportSstpb(dAtA, i, uint64(m.SpeedLimit))
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
+func (m *SetDownloadSpeedLimitResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SetDownloadSpeedLimitResponse) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
 func encodeVarintImportSstpb(dAtA []byte, offset int, v uint64) int {
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
@@ -1333,6 +1887,26 @@ func (m *SSTMeta) Size() (n int) {
 	if m.RegionEpoch != nil {
 		l = m.RegionEpoch.Size()
 		n += 1 + l + sovImportSstpb(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *RewriteRule) Size() (n int) {
+	var l int
+	_ = l
+	l = len(m.OldKeyPrefix)
+	if l > 0 {
+		n += 1 + l + sovImportSstpb(uint64(l))
+	}
+	l = len(m.NewKeyPrefix)
+	if l > 0 {
+		n += 1 + l + sovImportSstpb(uint64(l))
+	}
+	if m.NewTimestamp != 0 {
+		n += 1 + sovImportSstpb(uint64(m.NewTimestamp))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -1426,6 +2000,62 @@ func (m *CompactRequest) Size() (n int) {
 }
 
 func (m *CompactResponse) Size() (n int) {
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *DownloadRequest) Size() (n int) {
+	var l int
+	_ = l
+	l = m.Sst.Size()
+	n += 1 + l + sovImportSstpb(uint64(l))
+	l = len(m.Name)
+	if l > 0 {
+		n += 1 + l + sovImportSstpb(uint64(l))
+	}
+	l = m.RewriteRule.Size()
+	n += 1 + l + sovImportSstpb(uint64(l))
+	if m.StorageBackend != nil {
+		l = m.StorageBackend.Size()
+		n += 1 + l + sovImportSstpb(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *DownloadResponse) Size() (n int) {
+	var l int
+	_ = l
+	l = m.Range.Size()
+	n += 1 + l + sovImportSstpb(uint64(l))
+	if m.IsEmpty {
+		n += 2
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *SetDownloadSpeedLimitRequest) Size() (n int) {
+	var l int
+	_ = l
+	if m.SpeedLimit != 0 {
+		n += 1 + sovImportSstpb(uint64(m.SpeedLimit))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *SetDownloadSpeedLimitResponse) Size() (n int) {
 	var l int
 	_ = l
 	if m.XXX_unrecognized != nil {
@@ -1893,6 +2523,138 @@ func (m *SSTMeta) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipImportSstpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthImportSstpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *RewriteRule) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowImportSstpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: RewriteRule: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: RewriteRule: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field OldKeyPrefix", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowImportSstpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthImportSstpb
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.OldKeyPrefix = append(m.OldKeyPrefix[:0], dAtA[iNdEx:postIndex]...)
+			if m.OldKeyPrefix == nil {
+				m.OldKeyPrefix = []byte{}
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NewKeyPrefix", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowImportSstpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthImportSstpb
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.NewKeyPrefix = append(m.NewKeyPrefix[:0], dAtA[iNdEx:postIndex]...)
+			if m.NewKeyPrefix == nil {
+				m.NewKeyPrefix = []byte{}
+			}
+			iNdEx = postIndex
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NewTimestamp", wireType)
+			}
+			m.NewTimestamp = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowImportSstpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.NewTimestamp |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipImportSstpb(dAtA[iNdEx:])
@@ -2434,6 +3196,401 @@ func (m *CompactResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *DownloadRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowImportSstpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: DownloadRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: DownloadRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Sst", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowImportSstpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthImportSstpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if err := m.Sst.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 9:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowImportSstpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthImportSstpb
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Name = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 13:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RewriteRule", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowImportSstpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthImportSstpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if err := m.RewriteRule.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 14:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field StorageBackend", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowImportSstpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthImportSstpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.StorageBackend == nil {
+				m.StorageBackend = &backup.StorageBackend{}
+			}
+			if err := m.StorageBackend.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipImportSstpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthImportSstpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *DownloadResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowImportSstpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: DownloadResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: DownloadResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Range", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowImportSstpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthImportSstpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if err := m.Range.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field IsEmpty", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowImportSstpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.IsEmpty = bool(v != 0)
+		default:
+			iNdEx = preIndex
+			skippy, err := skipImportSstpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthImportSstpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *SetDownloadSpeedLimitRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowImportSstpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SetDownloadSpeedLimitRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SetDownloadSpeedLimitRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SpeedLimit", wireType)
+			}
+			m.SpeedLimit = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowImportSstpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.SpeedLimit |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipImportSstpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthImportSstpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *SetDownloadSpeedLimitResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowImportSstpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SetDownloadSpeedLimitResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SetDownloadSpeedLimitResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipImportSstpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthImportSstpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func skipImportSstpb(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
@@ -2539,47 +3696,65 @@ var (
 	ErrIntOverflowImportSstpb   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("import_sstpb.proto", fileDescriptor_import_sstpb_1b0c88c930fc0d22) }
+func init() { proto.RegisterFile("import_sstpb.proto", fileDescriptor_import_sstpb_7a221d02cea2795a) }
 
-var fileDescriptor_import_sstpb_1b0c88c930fc0d22 = []byte{
-	// 615 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x54, 0xdd, 0x6e, 0xd3, 0x4c,
-	0x10, 0xcd, 0xb6, 0xb1, 0xf3, 0x75, 0xf2, 0xf3, 0xb9, 0x4b, 0x00, 0x2b, 0x85, 0x10, 0xac, 0x4a,
-	0x84, 0x82, 0x5c, 0x29, 0x95, 0x7a, 0x4f, 0xab, 0x8a, 0x56, 0xa2, 0x95, 0xd8, 0x94, 0x2b, 0x24,
-	0x22, 0xd7, 0xde, 0x3a, 0x56, 0x62, 0xaf, 0x59, 0xaf, 0x03, 0x8f, 0xc2, 0xa3, 0xf0, 0x08, 0x5c,
-	0xf2, 0x08, 0xa8, 0xf0, 0x20, 0x68, 0x77, 0xed, 0xb4, 0x8e, 0x1a, 0x71, 0xe5, 0xf9, 0x39, 0x73,
-	0x66, 0x76, 0xce, 0x24, 0x80, 0xa3, 0x38, 0x65, 0x5c, 0x4c, 0xb2, 0x4c, 0xa4, 0x57, 0x6e, 0xca,
-	0x99, 0x60, 0xb8, 0x75, 0x37, 0xd6, 0x6b, 0xc5, 0x54, 0x78, 0x65, 0xae, 0xd7, 0xa6, 0x9c, 0x33,
-	0x7e, 0xeb, 0xce, 0x16, 0x3c, 0xf5, 0x97, 0x6e, 0x37, 0x64, 0x21, 0x53, 0xe6, 0xbe, 0xb4, 0x74,
-	0xd4, 0x79, 0x03, 0xdb, 0xe3, 0x2f, 0x91, 0xf0, 0xa7, 0xe7, 0x2c, 0xa0, 0x84, 0x7e, 0xce, 0x69,
-	0x26, 0xf0, 0x6b, 0xa8, 0xc7, 0x2c, 0xa0, 0x36, 0x1a, 0xa0, 0x61, 0x67, 0x64, 0xbb, 0x95, 0x39,
-	0xee, 0xc0, 0x15, 0xca, 0xe9, 0x02, 0xbe, 0x4b, 0x91, 0xa5, 0x2c, 0xc9, 0xa8, 0xb3, 0x0f, 0x06,
-	0xf1, 0x92, 0x90, 0xe2, 0x2e, 0x18, 0x99, 0xf0, 0xb8, 0x50, 0x6c, 0x2d, 0xa2, 0x1d, 0x6c, 0xc1,
-	0x26, 0x4d, 0x02, 0x7b, 0x43, 0xc5, 0xa4, 0xe9, 0xfc, 0x41, 0xd0, 0x18, 0x8f, 0x2f, 0xcf, 0xa9,
-	0xf0, 0x30, 0x86, 0x7a, 0x9e, 0x47, 0x41, 0x51, 0xa2, 0x6c, 0xfc, 0x12, 0x0c, 0x2e, 0x09, 0x55,
-	0x4d, 0x73, 0xf4, 0xa0, 0x3a, 0x95, 0xea, 0x45, 0x34, 0x42, 0xb6, 0xf4, 0xb9, 0x7f, 0x30, 0xb2,
-	0x37, 0x07, 0x68, 0xd8, 0x26, 0xda, 0xc1, 0x8f, 0xc0, 0x9c, 0xd3, 0x24, 0x14, 0x53, 0xbb, 0x3e,
-	0x40, 0xc3, 0x3a, 0x29, 0x3c, 0xfc, 0x18, 0x1a, 0xfe, 0xf5, 0x24, 0xf1, 0x62, 0x6a, 0x1b, 0x03,
-	0x34, 0xdc, 0x22, 0xa6, 0x7f, 0x7d, 0xe1, 0xc5, 0x14, 0xef, 0xc0, 0x16, 0xa7, 0x61, 0xc4, 0x92,
-	0x49, 0x14, 0xd8, 0xa6, 0xaa, 0xf9, 0x4f, 0x07, 0xce, 0x02, 0x7c, 0x08, 0xad, 0x22, 0x49, 0x53,
-	0xe6, 0x4f, 0xed, 0x46, 0x31, 0x55, 0xa1, 0x08, 0x51, 0xb9, 0x13, 0x99, 0x22, 0x4d, 0x7e, 0xeb,
-	0x38, 0x1f, 0xa1, 0xfd, 0x21, 0x9d, 0x33, 0x2f, 0x28, 0x97, 0xfd, 0x0a, 0xea, 0xb2, 0x46, 0xbd,
-	0xb5, 0x39, 0x7a, 0xb8, 0xb2, 0x6c, 0xbd, 0x90, 0xd3, 0x1a, 0x51, 0x20, 0xdc, 0x85, 0x7a, 0xe0,
-	0x09, 0x4f, 0xef, 0x4d, 0x46, 0xa5, 0x77, 0xd4, 0x00, 0xc3, 0x9f, 0xe6, 0xc9, 0xcc, 0xb1, 0xa0,
-	0x53, 0x92, 0x17, 0x32, 0x04, 0xd0, 0x3e, 0x4b, 0x42, 0x9a, 0x89, 0xb2, 0xdd, 0x1e, 0x34, 0x7c,
-	0x96, 0x08, 0xfa, 0x55, 0x14, 0x1d, 0x2d, 0xb7, 0xbc, 0x93, 0x63, 0x1d, 0x27, 0x25, 0x00, 0xbf,
-	0x80, 0xcd, 0x2c, 0x13, 0xc5, 0xc2, 0xef, 0x9f, 0x8c, 0x48, 0x84, 0x73, 0x08, 0x9d, 0xb2, 0x8b,
-	0xee, 0x8b, 0x77, 0xc1, 0x50, 0xd7, 0x58, 0x34, 0xe9, 0xb8, 0xe5, 0x6d, 0x9e, 0xc8, 0x2f, 0xd1,
-	0x49, 0xe7, 0x13, 0x74, 0x8e, 0x59, 0x9c, 0x7a, 0xfe, 0x72, 0xbc, 0xa5, 0xca, 0xe8, 0x9f, 0x2a,
-	0x3f, 0x87, 0x16, 0xcb, 0x45, 0x9a, 0x8b, 0xc9, 0x9c, 0x2e, 0xe8, 0x5c, 0x8d, 0x69, 0x90, 0xa6,
-	0x8e, 0xbd, 0x93, 0x21, 0x67, 0x1b, 0xfe, 0x5f, 0xf2, 0xeb, 0xc1, 0xf6, 0x76, 0x01, 0x6e, 0xaf,
-	0x15, 0x03, 0x98, 0x17, 0x8c, 0xc7, 0xde, 0xdc, 0xaa, 0x49, 0xfb, 0x4c, 0x35, 0xb3, 0xd0, 0xe8,
-	0xfb, 0x06, 0x6c, 0x69, 0x67, 0x3c, 0xbe, 0xc4, 0xef, 0x2b, 0x35, 0xcf, 0xd6, 0xfe, 0x1e, 0xf4,
-	0x1b, 0x7a, 0x83, 0xf5, 0x80, 0x42, 0x95, 0x1a, 0x7e, 0x0b, 0xa6, 0x56, 0x0a, 0xef, 0x54, 0xd1,
-	0x95, 0xe3, 0xe8, 0x3d, 0xb9, 0x3f, 0x59, 0xd2, 0x0c, 0x11, 0x3e, 0x01, 0x53, 0xaf, 0x7e, 0x95,
-	0xa8, 0x22, 0xfb, 0x2a, 0x51, 0x55, 0x2d, 0xa7, 0x86, 0x4f, 0xa1, 0x51, 0x6c, 0x0a, 0xaf, 0x40,
-	0xab, 0x02, 0xf5, 0x9e, 0xae, 0xc9, 0x96, 0x4c, 0x47, 0xce, 0x8f, 0x9b, 0x3e, 0xfa, 0x79, 0xd3,
-	0x47, 0xbf, 0x6e, 0xfa, 0xe8, 0xdb, 0xef, 0x7e, 0x0d, 0x2c, 0xc6, 0x43, 0x57, 0x44, 0xb3, 0x85,
-	0x3b, 0x5b, 0xa8, 0x7f, 0x9d, 0x2b, 0x53, 0x7d, 0x0e, 0xfe, 0x06, 0x00, 0x00, 0xff, 0xff, 0x20,
-	0x30, 0x84, 0x70, 0xe2, 0x04, 0x00, 0x00,
+var fileDescriptor_import_sstpb_7a221d02cea2795a = []byte{
+	// 908 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x55, 0xcb, 0x6e, 0xdb, 0x46,
+	0x14, 0x15, 0x2b, 0xea, 0x75, 0xf5, 0xb0, 0x32, 0x75, 0x52, 0x46, 0x49, 0x64, 0x95, 0x35, 0x5a,
+	0xd5, 0x69, 0x65, 0x40, 0x01, 0xb2, 0x0d, 0xaa, 0xd4, 0x68, 0xdc, 0x3c, 0xd0, 0x8e, 0xdc, 0x55,
+	0x81, 0x10, 0x34, 0x39, 0x96, 0x09, 0x91, 0x1c, 0x76, 0x38, 0xb4, 0xe2, 0x4d, 0xbf, 0xa3, 0x9f,
+	0xd0, 0x4f, 0xc9, 0xb2, 0xcb, 0xae, 0x8a, 0xc2, 0xf5, 0x4f, 0x74, 0x57, 0xcc, 0x83, 0x92, 0x28,
+	0x58, 0x75, 0x56, 0xba, 0x8f, 0xc3, 0x73, 0xcf, 0xcc, 0xbd, 0x77, 0x04, 0x28, 0x88, 0x12, 0xca,
+	0xb8, 0x93, 0xa6, 0x3c, 0x39, 0x1d, 0x25, 0x8c, 0x72, 0x8a, 0x5a, 0xeb, 0xb1, 0x5e, 0x2b, 0x22,
+	0xdc, 0xcd, 0x73, 0xbd, 0x36, 0x61, 0x8c, 0xb2, 0x95, 0x3b, 0xbf, 0x60, 0x89, 0xb7, 0x74, 0x77,
+	0x67, 0x74, 0x46, 0xa5, 0x79, 0x28, 0x2c, 0x1d, 0xdd, 0x61, 0x59, 0xca, 0xa5, 0xa9, 0x03, 0xad,
+	0x53, 0xd7, 0x9b, 0x67, 0x89, 0xf2, 0xec, 0x6f, 0xe0, 0xce, 0x74, 0x11, 0x70, 0xef, 0xfc, 0x35,
+	0xf5, 0x09, 0x26, 0xbf, 0x64, 0x24, 0xe5, 0xe8, 0x2b, 0x30, 0x23, 0xea, 0x13, 0xcb, 0x18, 0x18,
+	0xc3, 0xce, 0xd8, 0x1a, 0x15, 0x64, 0xae, 0xc1, 0x25, 0xca, 0xde, 0x05, 0xb4, 0x4e, 0x91, 0x26,
+	0x34, 0x4e, 0x89, 0x7d, 0x08, 0x15, 0xec, 0xc6, 0x33, 0x82, 0x76, 0xa1, 0x92, 0x72, 0x97, 0x71,
+	0xc9, 0xd6, 0xc2, 0xca, 0x41, 0x5d, 0x28, 0x93, 0xd8, 0xb7, 0x3e, 0x92, 0x31, 0x61, 0xda, 0xd7,
+	0x06, 0xd4, 0xa6, 0xd3, 0x93, 0xd7, 0x84, 0xbb, 0x08, 0x81, 0x99, 0x65, 0x81, 0xaf, 0x3f, 0x91,
+	0x36, 0xfa, 0x12, 0x2a, 0x4c, 0x10, 0xca, 0x6f, 0x9a, 0xe3, 0x8f, 0x8b, 0xaa, 0x64, 0x2d, 0xac,
+	0x10, 0xa2, 0xa4, 0xc7, 0xbc, 0x27, 0x63, 0xab, 0x3c, 0x30, 0x86, 0x6d, 0xac, 0x1c, 0x74, 0x0f,
+	0xaa, 0x21, 0x89, 0x67, 0xfc, 0xdc, 0x32, 0x07, 0xc6, 0xd0, 0xc4, 0xda, 0x43, 0x9f, 0x40, 0xcd,
+	0x3b, 0x73, 0x62, 0x37, 0x22, 0x56, 0x65, 0x60, 0x0c, 0x1b, 0xb8, 0xea, 0x9d, 0xbd, 0x71, 0x23,
+	0x82, 0x1e, 0x40, 0x83, 0x91, 0x59, 0x40, 0x63, 0x27, 0xf0, 0xad, 0xaa, 0xfc, 0xa6, 0xae, 0x02,
+	0xc7, 0x3e, 0x7a, 0x0a, 0x2d, 0x9d, 0x24, 0x09, 0xf5, 0xce, 0xad, 0x9a, 0x56, 0xa5, 0x1b, 0x86,
+	0x65, 0xee, 0x48, 0xa4, 0x70, 0x93, 0xad, 0x1c, 0xfb, 0x57, 0x68, 0x62, 0xb2, 0x60, 0x01, 0x27,
+	0x38, 0x0b, 0x09, 0xda, 0x87, 0x0e, 0x0d, 0x7d, 0x67, 0x4e, 0x2e, 0x9d, 0x84, 0x91, 0xb3, 0xe0,
+	0x9d, 0x3e, 0x73, 0x8b, 0x86, 0xfe, 0x4b, 0x72, 0xf9, 0x83, 0x8c, 0x09, 0x54, 0x4c, 0x16, 0xeb,
+	0x28, 0x75, 0x71, 0xad, 0x98, 0x2c, 0x56, 0xa8, 0xcf, 0xa0, 0x2d, 0x50, 0x3c, 0x88, 0x48, 0xca,
+	0xdd, 0x28, 0x91, 0xc7, 0x37, 0x25, 0xe8, 0x24, 0x8f, 0xd9, 0x3f, 0x43, 0xfb, 0xa7, 0x24, 0xa4,
+	0xae, 0x9f, 0x37, 0xfb, 0x31, 0x98, 0x42, 0xb3, 0xac, 0xdb, 0x1c, 0xdf, 0xdd, 0x68, 0xb6, 0x6a,
+	0xc8, 0x8b, 0x12, 0x96, 0x20, 0xb4, 0x0b, 0xa6, 0xef, 0x72, 0x57, 0x95, 0x17, 0x51, 0xe1, 0x4d,
+	0x6a, 0x50, 0xf1, 0xce, 0xb3, 0x78, 0x6e, 0x77, 0xa1, 0x93, 0x93, 0xeb, 0x31, 0xf0, 0xa1, 0x7d,
+	0x1c, 0xcf, 0x48, 0xca, 0xf3, 0x72, 0x07, 0x50, 0xf3, 0x68, 0xcc, 0xc9, 0x3b, 0xae, 0x2b, 0x76,
+	0x47, 0xf9, 0x18, 0x3f, 0x57, 0x71, 0x9c, 0x03, 0xd0, 0x17, 0x50, 0x4e, 0x53, 0xae, 0x1b, 0x7e,
+	0xb3, 0x32, 0x2c, 0x10, 0xf6, 0x53, 0xe8, 0xe4, 0x55, 0x54, 0x5d, 0xb4, 0x0f, 0x15, 0xb9, 0x2c,
+	0xba, 0x48, 0x67, 0x94, 0xaf, 0xce, 0x91, 0xf8, 0xc5, 0x2a, 0x69, 0xbf, 0x85, 0xce, 0x73, 0x1a,
+	0x25, 0xae, 0xb7, 0x94, 0xb7, 0x9c, 0x32, 0xe3, 0xd6, 0x29, 0xfb, 0x14, 0x5a, 0x34, 0xe3, 0x49,
+	0xc6, 0x9d, 0x90, 0x5c, 0x90, 0x50, 0xca, 0xac, 0xe0, 0xa6, 0x8a, 0xbd, 0x12, 0x21, 0xfb, 0x0e,
+	0xec, 0x2c, 0xf9, 0xf5, 0x85, 0x5c, 0x1b, 0xb0, 0xf3, 0x2d, 0x5d, 0xc4, 0xeb, 0x2d, 0xf8, 0xfa,
+	0xf6, 0x73, 0x4e, 0xcc, 0xf7, 0x7f, 0xed, 0x95, 0xe4, 0x69, 0xc5, 0x76, 0xc8, 0x69, 0x6d, 0xc8,
+	0x69, 0x95, 0x36, 0x9a, 0x88, 0x71, 0x94, 0x63, 0xe5, 0xb0, 0x2c, 0x24, 0x56, 0x5b, 0x72, 0xdd,
+	0xdf, 0x90, 0xbf, 0x1a, 0x3c, 0xcd, 0xd7, 0x64, 0x6b, 0xb3, 0xf8, 0x0c, 0x76, 0x52, 0x4e, 0x99,
+	0x3b, 0x23, 0x8e, 0x78, 0x23, 0xc4, 0x7e, 0x76, 0x24, 0xcd, 0xbd, 0x91, 0x7e, 0x33, 0xa6, 0x2a,
+	0x3d, 0x51, 0x59, 0xdc, 0x49, 0x0b, 0xfe, 0xf7, 0x66, 0xbd, 0xde, 0x6d, 0xe0, 0x72, 0xc6, 0x42,
+	0xfb, 0x2d, 0x74, 0x57, 0xa7, 0xd4, 0x3d, 0x39, 0xbc, 0xfd, 0x6e, 0xb5, 0x2c, 0x7d, 0xc3, 0xf7,
+	0xa1, 0x1e, 0xa4, 0x0e, 0x89, 0x12, 0x7e, 0x29, 0x2f, 0xa7, 0x8e, 0x6b, 0x41, 0x7a, 0x24, 0x5c,
+	0xfb, 0x19, 0x3c, 0x9c, 0x12, 0x9e, 0x97, 0x98, 0x26, 0x84, 0xf8, 0xaf, 0x82, 0x28, 0x58, 0xf6,
+	0x71, 0x0f, 0x9a, 0xa9, 0x08, 0x3a, 0xa1, 0x88, 0xca, 0x8a, 0x26, 0x86, 0x74, 0x89, 0xb3, 0xf7,
+	0xe0, 0xd1, 0x16, 0x02, 0xa5, 0xf6, 0x60, 0x1f, 0x60, 0xf5, 0xac, 0x21, 0x80, 0xea, 0x1b, 0xca,
+	0x22, 0x37, 0xec, 0x96, 0x84, 0x7d, 0x2c, 0x95, 0x77, 0x8d, 0xf1, 0xbf, 0x65, 0x68, 0x28, 0x67,
+	0x3a, 0x3d, 0x41, 0x3f, 0x16, 0xbe, 0xd9, 0xdb, 0xfa, 0x70, 0x2a, 0x91, 0xbd, 0xc1, 0x76, 0x80,
+	0x9e, 0x96, 0x12, 0xfa, 0x0e, 0xaa, 0x6a, 0xa5, 0xd0, 0x83, 0x22, 0xba, 0xb0, 0xc5, 0xbd, 0x87,
+	0x37, 0x27, 0x73, 0x9a, 0xa1, 0x81, 0x8e, 0xa0, 0xaa, 0x76, 0x64, 0x93, 0xa8, 0xb0, 0x9f, 0x9b,
+	0x44, 0xc5, 0xb5, 0xb2, 0x4b, 0xe8, 0x05, 0xd4, 0xf4, 0x48, 0xa3, 0x0d, 0x68, 0x71, 0x93, 0x7a,
+	0x8f, 0xb6, 0x64, 0x97, 0x4c, 0x0c, 0xee, 0xde, 0xd8, 0x01, 0x74, 0xb0, 0x71, 0x2d, 0xff, 0xd3,
+	0xe7, 0xde, 0xe3, 0x0f, 0xc2, 0x2e, 0x6b, 0xbe, 0x84, 0x7a, 0x9e, 0x47, 0x1b, 0x02, 0x37, 0x96,
+	0xb2, 0xd7, 0xdf, 0x96, 0xce, 0xc9, 0x26, 0x9f, 0xff, 0xf9, 0x7b, 0xdd, 0x78, 0x7f, 0xd5, 0x37,
+	0xfe, 0xb8, 0xea, 0x1b, 0x7f, 0x5f, 0xf5, 0x8d, 0xdf, 0xfe, 0xe9, 0x97, 0xa0, 0x4b, 0xd9, 0x6c,
+	0xc4, 0x83, 0xf9, 0xc5, 0x68, 0x7e, 0x21, 0xff, 0x63, 0x4f, 0xab, 0xf2, 0xe7, 0xc9, 0x7f, 0x01,
+	0x00, 0x00, 0xff, 0xff, 0x7d, 0xa8, 0x28, 0x84, 0xef, 0x07, 0x00, 0x00,
 }

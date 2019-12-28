@@ -2,10 +2,12 @@ syntax = "proto3";
 package metapb;
 
 import "gogoproto/gogo.proto";
+import "rustproto.proto";
 
 option (gogoproto.marshaler_all) = true;
 option (gogoproto.sizer_all) = true;
 option (gogoproto.unmarshaler_all) = true;
+option (rustproto.lite_runtime_all) = true;
 
 option java_package = "org.tikv.kvproto";
 
@@ -31,11 +33,17 @@ message StoreLabel {
 
 message Store {
     uint64 id = 1;
+    // Address to handle client requests (kv, cop, etc.)
     string address = 2;
     StoreState state = 3;
     repeated StoreLabel labels = 4;
     string version = 5;
-    // more attributes......
+    // Address to handle peer requests (raft messages from other store).
+    // Empty means same as address.
+    string peer_address = 6;
+    // Status address provides the HTTP service for external components
+    string status_address = 7;
+    string git_hash = 8;
 }
 
 message RegionEpoch {

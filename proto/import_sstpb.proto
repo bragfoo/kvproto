@@ -6,10 +6,13 @@ import "metapb.proto";
 import "errorpb.proto";
 import "kvrpcpb.proto";
 import "gogoproto/gogo.proto";
+import "rustproto.proto";
+import "backup.proto";
 
 option (gogoproto.sizer_all) = true;
 option (gogoproto.marshaler_all) = true;
 option (gogoproto.unmarshaler_all) = true;
+option (rustproto.lite_runtime_all) = true;
 
 option java_package = "org.tikv.kvproto";
 
@@ -37,6 +40,11 @@ service ImportSST {
     rpc Ingest(IngestRequest) returns (IngestResponse) {}
     // Compact the specific range for better performance.
     rpc Compact(CompactRequest) returns (CompactResponse) {}
+
+    rpc SetDownloadSpeedLimit(SetDownloadSpeedLimitRequest) returns (SetDownloadSpeedLimitResponse) {}
+    // Download an SST file from an external storage, and performs key-rewrite
+    // after downloading.
+    rpc Download(DownloadRequest) returns (DownloadResponse) {}
 }
 
 enum SwitchMode {
@@ -64,6 +72,14 @@ message SSTMeta {
     string cf_name = 5;
     uint64 region_id = 6;
     metapb.RegionEpoch region_epoch = 7;
+}
+
+// A rewrite rule is applied on the *encoded* keys (the internal storage
+// representation).
+message RewriteRule {
+    bytes old_key_prefix = 1;
+    bytes new_key_prefix = 2;
+    uint64 new_timestamp = 3;
 }
 
 message UploadRequest {
@@ -94,4 +110,53 @@ message CompactRequest {
 }
 
 message CompactResponse {
+}
+
+message DownloadRequest {
+    // The SST meta used to identify the downloaded file.
+    // Must be the same among all nodes in the same Raft group.
+    // Note: the "crc32" and "cf_name" fields are ignored in this request,
+    // and the "range" field represents the closed key range after rewrite
+    // (as origin keys in encoded representation).
+    SSTMeta sst = 2 [(gogoproto.nullable) = false];
+
+    // The url field is deprecated, use storage_backend instead
+    reserved 8; reserved "url";
+
+    // The file name of the SST file.
+    string name = 9;
+
+    // Performs a key prefix rewrite after downloading the SST file.
+    // All keys in the SST will be rewritten as:
+    //
+    //  new_key = new_key_prefix + old_key[len(old_key_prefix)..]
+    //
+    // When used for TiDB, rewriting the prefix changes the table ID. Please
+    // note that key-rewrite is applied on the origin keys in encoded
+    // representation (the SST itself should still use data keys in encoded
+    // representation).
+    //
+    // You need to ensure that the keys before and after rewriting are in the
+    // same order, otherwise the RPC request will fail.
+    RewriteRule rewrite_rule = 13 [(gogoproto.nullable) = false];
+
+    backup.StorageBackend storage_backend = 14;
+}
+
+message DownloadResponse {
+    // The actual key range (after rewrite) of the downloaded SST. The range is
+    // inclusive in both ends.
+    Range range = 1 [(gogoproto.nullable) = false];
+
+    // Whether the SST is empty. An empty SST is prohibited in TiKV, do not
+    // ingest if this field is true.
+    bool is_empty = 2;
+}
+
+message SetDownloadSpeedLimitRequest {
+    // The download speed limit (bytes/second). Set to 0 for unlimited speed.
+    uint64 speed_limit = 1;
+}
+
+message SetDownloadSpeedLimitResponse {
 }
