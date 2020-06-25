@@ -40,6 +40,9 @@ message BackupMeta {
     // backup data's range is represented by raw_ranges.
     bool is_raw_kv = 8;
     repeated RawRange raw_ranges = 9;
+
+    // In incremental backup, DDLs which are completed in (lastBackupTS, backupTS] will be stored here.
+    bytes ddls = 10;
 }
 
 message File {
@@ -56,6 +59,8 @@ message File {
     uint64 total_bytes = 9;
 
     string cf = 10;
+
+    uint64 size = 11;
 }
 
 message Schema {
@@ -65,6 +70,8 @@ message Schema {
     uint64 crc64xor = 3;
     uint64 total_kvs = 4;
     uint64 total_bytes = 5;
+
+    uint32 tiflash_replicas = 6;
 }
 
 message RawRange {
@@ -142,6 +149,7 @@ message S3 {
     string access_key = 8;
     string secret_access_key = 9;
     bool   force_path_style = 10;
+    string sse_kms_key_id = 11;
 }
 
 // GCS storage backend saves files into google cloud storage.

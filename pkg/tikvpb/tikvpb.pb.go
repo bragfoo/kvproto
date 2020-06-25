@@ -46,7 +46,7 @@ func (m *BatchCommandsRequest) Reset()         { *m = BatchCommandsRequest{} }
 func (m *BatchCommandsRequest) String() string { return proto.CompactTextString(m) }
 func (*BatchCommandsRequest) ProtoMessage()    {}
 func (*BatchCommandsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tikvpb_352285c788f1f4e2, []int{0}
+	return fileDescriptor_tikvpb_d5a2fed7d5e79d62, []int{0}
 }
 func (m *BatchCommandsRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -117,6 +117,12 @@ type BatchCommandsRequest_Request struct {
 	//	*BatchCommandsRequest_Request_PessimisticRollback
 	//	*BatchCommandsRequest_Request_CheckTxnStatus
 	//	*BatchCommandsRequest_Request_TxnHeartBeat
+	//	*BatchCommandsRequest_Request_VerGet
+	//	*BatchCommandsRequest_Request_VerBatchGet
+	//	*BatchCommandsRequest_Request_VerMut
+	//	*BatchCommandsRequest_Request_VerBatchMut
+	//	*BatchCommandsRequest_Request_VerScan
+	//	*BatchCommandsRequest_Request_VerDeleteRange
 	//	*BatchCommandsRequest_Request_Empty
 	Cmd                  isBatchCommandsRequest_Request_Cmd `protobuf_oneof:"cmd"`
 	XXX_NoUnkeyedLiteral struct{}                           `json:"-"`
@@ -128,7 +134,7 @@ func (m *BatchCommandsRequest_Request) Reset()         { *m = BatchCommandsReque
 func (m *BatchCommandsRequest_Request) String() string { return proto.CompactTextString(m) }
 func (*BatchCommandsRequest_Request) ProtoMessage()    {}
 func (*BatchCommandsRequest_Request) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tikvpb_352285c788f1f4e2, []int{0, 0}
+	return fileDescriptor_tikvpb_d5a2fed7d5e79d62, []int{0, 0}
 }
 func (m *BatchCommandsRequest_Request) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -241,6 +247,24 @@ type BatchCommandsRequest_Request_CheckTxnStatus struct {
 type BatchCommandsRequest_Request_TxnHeartBeat struct {
 	TxnHeartBeat *kvrpcpb.TxnHeartBeatRequest `protobuf:"bytes,26,opt,name=TxnHeartBeat,oneof"`
 }
+type BatchCommandsRequest_Request_VerGet struct {
+	VerGet *kvrpcpb.VerGetRequest `protobuf:"bytes,27,opt,name=VerGet,oneof"`
+}
+type BatchCommandsRequest_Request_VerBatchGet struct {
+	VerBatchGet *kvrpcpb.VerBatchGetRequest `protobuf:"bytes,28,opt,name=VerBatchGet,oneof"`
+}
+type BatchCommandsRequest_Request_VerMut struct {
+	VerMut *kvrpcpb.VerMutRequest `protobuf:"bytes,29,opt,name=VerMut,oneof"`
+}
+type BatchCommandsRequest_Request_VerBatchMut struct {
+	VerBatchMut *kvrpcpb.VerBatchMutRequest `protobuf:"bytes,30,opt,name=VerBatchMut,oneof"`
+}
+type BatchCommandsRequest_Request_VerScan struct {
+	VerScan *kvrpcpb.VerScanRequest `protobuf:"bytes,31,opt,name=VerScan,oneof"`
+}
+type BatchCommandsRequest_Request_VerDeleteRange struct {
+	VerDeleteRange *kvrpcpb.VerDeleteRangeRequest `protobuf:"bytes,32,opt,name=VerDeleteRange,oneof"`
+}
 type BatchCommandsRequest_Request_Empty struct {
 	Empty *BatchCommandsEmptyRequest `protobuf:"bytes,255,opt,name=Empty,oneof"`
 }
@@ -271,6 +295,12 @@ func (*BatchCommandsRequest_Request_PessimisticLock) isBatchCommandsRequest_Requ
 func (*BatchCommandsRequest_Request_PessimisticRollback) isBatchCommandsRequest_Request_Cmd() {}
 func (*BatchCommandsRequest_Request_CheckTxnStatus) isBatchCommandsRequest_Request_Cmd()      {}
 func (*BatchCommandsRequest_Request_TxnHeartBeat) isBatchCommandsRequest_Request_Cmd()        {}
+func (*BatchCommandsRequest_Request_VerGet) isBatchCommandsRequest_Request_Cmd()              {}
+func (*BatchCommandsRequest_Request_VerBatchGet) isBatchCommandsRequest_Request_Cmd()         {}
+func (*BatchCommandsRequest_Request_VerMut) isBatchCommandsRequest_Request_Cmd()              {}
+func (*BatchCommandsRequest_Request_VerBatchMut) isBatchCommandsRequest_Request_Cmd()         {}
+func (*BatchCommandsRequest_Request_VerScan) isBatchCommandsRequest_Request_Cmd()             {}
+func (*BatchCommandsRequest_Request_VerDeleteRange) isBatchCommandsRequest_Request_Cmd()      {}
 func (*BatchCommandsRequest_Request_Empty) isBatchCommandsRequest_Request_Cmd()               {}
 
 func (m *BatchCommandsRequest_Request) GetCmd() isBatchCommandsRequest_Request_Cmd {
@@ -462,6 +492,48 @@ func (m *BatchCommandsRequest_Request) GetTxnHeartBeat() *kvrpcpb.TxnHeartBeatRe
 	return nil
 }
 
+func (m *BatchCommandsRequest_Request) GetVerGet() *kvrpcpb.VerGetRequest {
+	if x, ok := m.GetCmd().(*BatchCommandsRequest_Request_VerGet); ok {
+		return x.VerGet
+	}
+	return nil
+}
+
+func (m *BatchCommandsRequest_Request) GetVerBatchGet() *kvrpcpb.VerBatchGetRequest {
+	if x, ok := m.GetCmd().(*BatchCommandsRequest_Request_VerBatchGet); ok {
+		return x.VerBatchGet
+	}
+	return nil
+}
+
+func (m *BatchCommandsRequest_Request) GetVerMut() *kvrpcpb.VerMutRequest {
+	if x, ok := m.GetCmd().(*BatchCommandsRequest_Request_VerMut); ok {
+		return x.VerMut
+	}
+	return nil
+}
+
+func (m *BatchCommandsRequest_Request) GetVerBatchMut() *kvrpcpb.VerBatchMutRequest {
+	if x, ok := m.GetCmd().(*BatchCommandsRequest_Request_VerBatchMut); ok {
+		return x.VerBatchMut
+	}
+	return nil
+}
+
+func (m *BatchCommandsRequest_Request) GetVerScan() *kvrpcpb.VerScanRequest {
+	if x, ok := m.GetCmd().(*BatchCommandsRequest_Request_VerScan); ok {
+		return x.VerScan
+	}
+	return nil
+}
+
+func (m *BatchCommandsRequest_Request) GetVerDeleteRange() *kvrpcpb.VerDeleteRangeRequest {
+	if x, ok := m.GetCmd().(*BatchCommandsRequest_Request_VerDeleteRange); ok {
+		return x.VerDeleteRange
+	}
+	return nil
+}
+
 func (m *BatchCommandsRequest_Request) GetEmpty() *BatchCommandsEmptyRequest {
 	if x, ok := m.GetCmd().(*BatchCommandsRequest_Request_Empty); ok {
 		return x.Empty
@@ -498,6 +570,12 @@ func (*BatchCommandsRequest_Request) XXX_OneofFuncs() (func(msg proto.Message, b
 		(*BatchCommandsRequest_Request_PessimisticRollback)(nil),
 		(*BatchCommandsRequest_Request_CheckTxnStatus)(nil),
 		(*BatchCommandsRequest_Request_TxnHeartBeat)(nil),
+		(*BatchCommandsRequest_Request_VerGet)(nil),
+		(*BatchCommandsRequest_Request_VerBatchGet)(nil),
+		(*BatchCommandsRequest_Request_VerMut)(nil),
+		(*BatchCommandsRequest_Request_VerBatchMut)(nil),
+		(*BatchCommandsRequest_Request_VerScan)(nil),
+		(*BatchCommandsRequest_Request_VerDeleteRange)(nil),
 		(*BatchCommandsRequest_Request_Empty)(nil),
 	}
 }
@@ -634,6 +712,36 @@ func _BatchCommandsRequest_Request_OneofMarshaler(msg proto.Message, b *proto.Bu
 	case *BatchCommandsRequest_Request_TxnHeartBeat:
 		_ = b.EncodeVarint(26<<3 | proto.WireBytes)
 		if err := b.EncodeMessage(x.TxnHeartBeat); err != nil {
+			return err
+		}
+	case *BatchCommandsRequest_Request_VerGet:
+		_ = b.EncodeVarint(27<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.VerGet); err != nil {
+			return err
+		}
+	case *BatchCommandsRequest_Request_VerBatchGet:
+		_ = b.EncodeVarint(28<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.VerBatchGet); err != nil {
+			return err
+		}
+	case *BatchCommandsRequest_Request_VerMut:
+		_ = b.EncodeVarint(29<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.VerMut); err != nil {
+			return err
+		}
+	case *BatchCommandsRequest_Request_VerBatchMut:
+		_ = b.EncodeVarint(30<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.VerBatchMut); err != nil {
+			return err
+		}
+	case *BatchCommandsRequest_Request_VerScan:
+		_ = b.EncodeVarint(31<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.VerScan); err != nil {
+			return err
+		}
+	case *BatchCommandsRequest_Request_VerDeleteRange:
+		_ = b.EncodeVarint(32<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.VerDeleteRange); err != nil {
 			return err
 		}
 	case *BatchCommandsRequest_Request_Empty:
@@ -859,6 +967,54 @@ func _BatchCommandsRequest_Request_OneofUnmarshaler(msg proto.Message, tag, wire
 		err := b.DecodeMessage(msg)
 		m.Cmd = &BatchCommandsRequest_Request_TxnHeartBeat{msg}
 		return true, err
+	case 27: // cmd.VerGet
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(kvrpcpb.VerGetRequest)
+		err := b.DecodeMessage(msg)
+		m.Cmd = &BatchCommandsRequest_Request_VerGet{msg}
+		return true, err
+	case 28: // cmd.VerBatchGet
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(kvrpcpb.VerBatchGetRequest)
+		err := b.DecodeMessage(msg)
+		m.Cmd = &BatchCommandsRequest_Request_VerBatchGet{msg}
+		return true, err
+	case 29: // cmd.VerMut
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(kvrpcpb.VerMutRequest)
+		err := b.DecodeMessage(msg)
+		m.Cmd = &BatchCommandsRequest_Request_VerMut{msg}
+		return true, err
+	case 30: // cmd.VerBatchMut
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(kvrpcpb.VerBatchMutRequest)
+		err := b.DecodeMessage(msg)
+		m.Cmd = &BatchCommandsRequest_Request_VerBatchMut{msg}
+		return true, err
+	case 31: // cmd.VerScan
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(kvrpcpb.VerScanRequest)
+		err := b.DecodeMessage(msg)
+		m.Cmd = &BatchCommandsRequest_Request_VerScan{msg}
+		return true, err
+	case 32: // cmd.VerDeleteRange
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(kvrpcpb.VerDeleteRangeRequest)
+		err := b.DecodeMessage(msg)
+		m.Cmd = &BatchCommandsRequest_Request_VerDeleteRange{msg}
+		return true, err
 	case 255: // cmd.Empty
 		if wire != proto.WireBytes {
 			return true, proto.ErrInternalBadWireType
@@ -1006,6 +1162,36 @@ func _BatchCommandsRequest_Request_OneofSizer(msg proto.Message) (n int) {
 		n += 2 // tag and wire
 		n += proto.SizeVarint(uint64(s))
 		n += s
+	case *BatchCommandsRequest_Request_VerGet:
+		s := proto.Size(x.VerGet)
+		n += 2 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *BatchCommandsRequest_Request_VerBatchGet:
+		s := proto.Size(x.VerBatchGet)
+		n += 2 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *BatchCommandsRequest_Request_VerMut:
+		s := proto.Size(x.VerMut)
+		n += 2 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *BatchCommandsRequest_Request_VerBatchMut:
+		s := proto.Size(x.VerBatchMut)
+		n += 2 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *BatchCommandsRequest_Request_VerScan:
+		s := proto.Size(x.VerScan)
+		n += 2 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *BatchCommandsRequest_Request_VerDeleteRange:
+		s := proto.Size(x.VerDeleteRange)
+		n += 2 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
 	case *BatchCommandsRequest_Request_Empty:
 		s := proto.Size(x.Empty)
 		n += 2 // tag and wire
@@ -1032,7 +1218,7 @@ func (m *BatchCommandsResponse) Reset()         { *m = BatchCommandsResponse{} }
 func (m *BatchCommandsResponse) String() string { return proto.CompactTextString(m) }
 func (*BatchCommandsResponse) ProtoMessage()    {}
 func (*BatchCommandsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tikvpb_352285c788f1f4e2, []int{1}
+	return fileDescriptor_tikvpb_d5a2fed7d5e79d62, []int{1}
 }
 func (m *BatchCommandsResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1110,6 +1296,12 @@ type BatchCommandsResponse_Response struct {
 	//	*BatchCommandsResponse_Response_PessimisticRollback
 	//	*BatchCommandsResponse_Response_CheckTxnStatus
 	//	*BatchCommandsResponse_Response_TxnHeartBeat
+	//	*BatchCommandsResponse_Response_VerGet
+	//	*BatchCommandsResponse_Response_VerBatchGet
+	//	*BatchCommandsResponse_Response_VerMut
+	//	*BatchCommandsResponse_Response_VerBatchMut
+	//	*BatchCommandsResponse_Response_VerScan
+	//	*BatchCommandsResponse_Response_VerDeleteRange
 	//	*BatchCommandsResponse_Response_Empty
 	Cmd                  isBatchCommandsResponse_Response_Cmd `protobuf_oneof:"cmd"`
 	XXX_NoUnkeyedLiteral struct{}                             `json:"-"`
@@ -1121,7 +1313,7 @@ func (m *BatchCommandsResponse_Response) Reset()         { *m = BatchCommandsRes
 func (m *BatchCommandsResponse_Response) String() string { return proto.CompactTextString(m) }
 func (*BatchCommandsResponse_Response) ProtoMessage()    {}
 func (*BatchCommandsResponse_Response) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tikvpb_352285c788f1f4e2, []int{1, 0}
+	return fileDescriptor_tikvpb_d5a2fed7d5e79d62, []int{1, 0}
 }
 func (m *BatchCommandsResponse_Response) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1234,6 +1426,24 @@ type BatchCommandsResponse_Response_CheckTxnStatus struct {
 type BatchCommandsResponse_Response_TxnHeartBeat struct {
 	TxnHeartBeat *kvrpcpb.TxnHeartBeatResponse `protobuf:"bytes,26,opt,name=TxnHeartBeat,oneof"`
 }
+type BatchCommandsResponse_Response_VerGet struct {
+	VerGet *kvrpcpb.VerGetResponse `protobuf:"bytes,27,opt,name=VerGet,oneof"`
+}
+type BatchCommandsResponse_Response_VerBatchGet struct {
+	VerBatchGet *kvrpcpb.VerBatchGetResponse `protobuf:"bytes,28,opt,name=VerBatchGet,oneof"`
+}
+type BatchCommandsResponse_Response_VerMut struct {
+	VerMut *kvrpcpb.VerMutResponse `protobuf:"bytes,29,opt,name=VerMut,oneof"`
+}
+type BatchCommandsResponse_Response_VerBatchMut struct {
+	VerBatchMut *kvrpcpb.VerBatchMutResponse `protobuf:"bytes,30,opt,name=VerBatchMut,oneof"`
+}
+type BatchCommandsResponse_Response_VerScan struct {
+	VerScan *kvrpcpb.VerScanResponse `protobuf:"bytes,31,opt,name=VerScan,oneof"`
+}
+type BatchCommandsResponse_Response_VerDeleteRange struct {
+	VerDeleteRange *kvrpcpb.VerDeleteRangeResponse `protobuf:"bytes,32,opt,name=VerDeleteRange,oneof"`
+}
 type BatchCommandsResponse_Response_Empty struct {
 	Empty *BatchCommandsEmptyResponse `protobuf:"bytes,255,opt,name=Empty,oneof"`
 }
@@ -1264,6 +1474,12 @@ func (*BatchCommandsResponse_Response_PessimisticLock) isBatchCommandsResponse_R
 func (*BatchCommandsResponse_Response_PessimisticRollback) isBatchCommandsResponse_Response_Cmd() {}
 func (*BatchCommandsResponse_Response_CheckTxnStatus) isBatchCommandsResponse_Response_Cmd()      {}
 func (*BatchCommandsResponse_Response_TxnHeartBeat) isBatchCommandsResponse_Response_Cmd()        {}
+func (*BatchCommandsResponse_Response_VerGet) isBatchCommandsResponse_Response_Cmd()              {}
+func (*BatchCommandsResponse_Response_VerBatchGet) isBatchCommandsResponse_Response_Cmd()         {}
+func (*BatchCommandsResponse_Response_VerMut) isBatchCommandsResponse_Response_Cmd()              {}
+func (*BatchCommandsResponse_Response_VerBatchMut) isBatchCommandsResponse_Response_Cmd()         {}
+func (*BatchCommandsResponse_Response_VerScan) isBatchCommandsResponse_Response_Cmd()             {}
+func (*BatchCommandsResponse_Response_VerDeleteRange) isBatchCommandsResponse_Response_Cmd()      {}
 func (*BatchCommandsResponse_Response_Empty) isBatchCommandsResponse_Response_Cmd()               {}
 
 func (m *BatchCommandsResponse_Response) GetCmd() isBatchCommandsResponse_Response_Cmd {
@@ -1455,6 +1671,48 @@ func (m *BatchCommandsResponse_Response) GetTxnHeartBeat() *kvrpcpb.TxnHeartBeat
 	return nil
 }
 
+func (m *BatchCommandsResponse_Response) GetVerGet() *kvrpcpb.VerGetResponse {
+	if x, ok := m.GetCmd().(*BatchCommandsResponse_Response_VerGet); ok {
+		return x.VerGet
+	}
+	return nil
+}
+
+func (m *BatchCommandsResponse_Response) GetVerBatchGet() *kvrpcpb.VerBatchGetResponse {
+	if x, ok := m.GetCmd().(*BatchCommandsResponse_Response_VerBatchGet); ok {
+		return x.VerBatchGet
+	}
+	return nil
+}
+
+func (m *BatchCommandsResponse_Response) GetVerMut() *kvrpcpb.VerMutResponse {
+	if x, ok := m.GetCmd().(*BatchCommandsResponse_Response_VerMut); ok {
+		return x.VerMut
+	}
+	return nil
+}
+
+func (m *BatchCommandsResponse_Response) GetVerBatchMut() *kvrpcpb.VerBatchMutResponse {
+	if x, ok := m.GetCmd().(*BatchCommandsResponse_Response_VerBatchMut); ok {
+		return x.VerBatchMut
+	}
+	return nil
+}
+
+func (m *BatchCommandsResponse_Response) GetVerScan() *kvrpcpb.VerScanResponse {
+	if x, ok := m.GetCmd().(*BatchCommandsResponse_Response_VerScan); ok {
+		return x.VerScan
+	}
+	return nil
+}
+
+func (m *BatchCommandsResponse_Response) GetVerDeleteRange() *kvrpcpb.VerDeleteRangeResponse {
+	if x, ok := m.GetCmd().(*BatchCommandsResponse_Response_VerDeleteRange); ok {
+		return x.VerDeleteRange
+	}
+	return nil
+}
+
 func (m *BatchCommandsResponse_Response) GetEmpty() *BatchCommandsEmptyResponse {
 	if x, ok := m.GetCmd().(*BatchCommandsResponse_Response_Empty); ok {
 		return x.Empty
@@ -1491,6 +1749,12 @@ func (*BatchCommandsResponse_Response) XXX_OneofFuncs() (func(msg proto.Message,
 		(*BatchCommandsResponse_Response_PessimisticRollback)(nil),
 		(*BatchCommandsResponse_Response_CheckTxnStatus)(nil),
 		(*BatchCommandsResponse_Response_TxnHeartBeat)(nil),
+		(*BatchCommandsResponse_Response_VerGet)(nil),
+		(*BatchCommandsResponse_Response_VerBatchGet)(nil),
+		(*BatchCommandsResponse_Response_VerMut)(nil),
+		(*BatchCommandsResponse_Response_VerBatchMut)(nil),
+		(*BatchCommandsResponse_Response_VerScan)(nil),
+		(*BatchCommandsResponse_Response_VerDeleteRange)(nil),
 		(*BatchCommandsResponse_Response_Empty)(nil),
 	}
 }
@@ -1627,6 +1891,36 @@ func _BatchCommandsResponse_Response_OneofMarshaler(msg proto.Message, b *proto.
 	case *BatchCommandsResponse_Response_TxnHeartBeat:
 		_ = b.EncodeVarint(26<<3 | proto.WireBytes)
 		if err := b.EncodeMessage(x.TxnHeartBeat); err != nil {
+			return err
+		}
+	case *BatchCommandsResponse_Response_VerGet:
+		_ = b.EncodeVarint(27<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.VerGet); err != nil {
+			return err
+		}
+	case *BatchCommandsResponse_Response_VerBatchGet:
+		_ = b.EncodeVarint(28<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.VerBatchGet); err != nil {
+			return err
+		}
+	case *BatchCommandsResponse_Response_VerMut:
+		_ = b.EncodeVarint(29<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.VerMut); err != nil {
+			return err
+		}
+	case *BatchCommandsResponse_Response_VerBatchMut:
+		_ = b.EncodeVarint(30<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.VerBatchMut); err != nil {
+			return err
+		}
+	case *BatchCommandsResponse_Response_VerScan:
+		_ = b.EncodeVarint(31<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.VerScan); err != nil {
+			return err
+		}
+	case *BatchCommandsResponse_Response_VerDeleteRange:
+		_ = b.EncodeVarint(32<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.VerDeleteRange); err != nil {
 			return err
 		}
 	case *BatchCommandsResponse_Response_Empty:
@@ -1852,6 +2146,54 @@ func _BatchCommandsResponse_Response_OneofUnmarshaler(msg proto.Message, tag, wi
 		err := b.DecodeMessage(msg)
 		m.Cmd = &BatchCommandsResponse_Response_TxnHeartBeat{msg}
 		return true, err
+	case 27: // cmd.VerGet
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(kvrpcpb.VerGetResponse)
+		err := b.DecodeMessage(msg)
+		m.Cmd = &BatchCommandsResponse_Response_VerGet{msg}
+		return true, err
+	case 28: // cmd.VerBatchGet
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(kvrpcpb.VerBatchGetResponse)
+		err := b.DecodeMessage(msg)
+		m.Cmd = &BatchCommandsResponse_Response_VerBatchGet{msg}
+		return true, err
+	case 29: // cmd.VerMut
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(kvrpcpb.VerMutResponse)
+		err := b.DecodeMessage(msg)
+		m.Cmd = &BatchCommandsResponse_Response_VerMut{msg}
+		return true, err
+	case 30: // cmd.VerBatchMut
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(kvrpcpb.VerBatchMutResponse)
+		err := b.DecodeMessage(msg)
+		m.Cmd = &BatchCommandsResponse_Response_VerBatchMut{msg}
+		return true, err
+	case 31: // cmd.VerScan
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(kvrpcpb.VerScanResponse)
+		err := b.DecodeMessage(msg)
+		m.Cmd = &BatchCommandsResponse_Response_VerScan{msg}
+		return true, err
+	case 32: // cmd.VerDeleteRange
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(kvrpcpb.VerDeleteRangeResponse)
+		err := b.DecodeMessage(msg)
+		m.Cmd = &BatchCommandsResponse_Response_VerDeleteRange{msg}
+		return true, err
 	case 255: // cmd.Empty
 		if wire != proto.WireBytes {
 			return true, proto.ErrInternalBadWireType
@@ -1999,6 +2341,36 @@ func _BatchCommandsResponse_Response_OneofSizer(msg proto.Message) (n int) {
 		n += 2 // tag and wire
 		n += proto.SizeVarint(uint64(s))
 		n += s
+	case *BatchCommandsResponse_Response_VerGet:
+		s := proto.Size(x.VerGet)
+		n += 2 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *BatchCommandsResponse_Response_VerBatchGet:
+		s := proto.Size(x.VerBatchGet)
+		n += 2 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *BatchCommandsResponse_Response_VerMut:
+		s := proto.Size(x.VerMut)
+		n += 2 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *BatchCommandsResponse_Response_VerBatchMut:
+		s := proto.Size(x.VerBatchMut)
+		n += 2 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *BatchCommandsResponse_Response_VerScan:
+		s := proto.Size(x.VerScan)
+		n += 2 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *BatchCommandsResponse_Response_VerDeleteRange:
+		s := proto.Size(x.VerDeleteRange)
+		n += 2 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
 	case *BatchCommandsResponse_Response_Empty:
 		s := proto.Size(x.Empty)
 		n += 2 // tag and wire
@@ -2022,7 +2394,7 @@ func (m *BatchRaftMessage) Reset()         { *m = BatchRaftMessage{} }
 func (m *BatchRaftMessage) String() string { return proto.CompactTextString(m) }
 func (*BatchRaftMessage) ProtoMessage()    {}
 func (*BatchRaftMessage) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tikvpb_352285c788f1f4e2, []int{2}
+	return fileDescriptor_tikvpb_d5a2fed7d5e79d62, []int{2}
 }
 func (m *BatchRaftMessage) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2072,7 +2444,7 @@ func (m *BatchCommandsEmptyRequest) Reset()         { *m = BatchCommandsEmptyReq
 func (m *BatchCommandsEmptyRequest) String() string { return proto.CompactTextString(m) }
 func (*BatchCommandsEmptyRequest) ProtoMessage()    {}
 func (*BatchCommandsEmptyRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tikvpb_352285c788f1f4e2, []int{3}
+	return fileDescriptor_tikvpb_d5a2fed7d5e79d62, []int{3}
 }
 func (m *BatchCommandsEmptyRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2127,7 +2499,7 @@ func (m *BatchCommandsEmptyResponse) Reset()         { *m = BatchCommandsEmptyRe
 func (m *BatchCommandsEmptyResponse) String() string { return proto.CompactTextString(m) }
 func (*BatchCommandsEmptyResponse) ProtoMessage()    {}
 func (*BatchCommandsEmptyResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tikvpb_352285c788f1f4e2, []int{4}
+	return fileDescriptor_tikvpb_d5a2fed7d5e79d62, []int{4}
 }
 func (m *BatchCommandsEmptyResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -2184,7 +2556,7 @@ const _ = grpc.SupportPackageIsVersion4
 // Client API for Tikv service
 
 type TikvClient interface {
-	// KV commands with mvcc/txn supported.
+	// Commands using a transactional interface.
 	KvGet(ctx context.Context, in *kvrpcpb.GetRequest, opts ...grpc.CallOption) (*kvrpcpb.GetResponse, error)
 	KvScan(ctx context.Context, in *kvrpcpb.ScanRequest, opts ...grpc.CallOption) (*kvrpcpb.ScanResponse, error)
 	KvPrewrite(ctx context.Context, in *kvrpcpb.PrewriteRequest, opts ...grpc.CallOption) (*kvrpcpb.PrewriteResponse, error)
@@ -2201,7 +2573,7 @@ type TikvClient interface {
 	KvResolveLock(ctx context.Context, in *kvrpcpb.ResolveLockRequest, opts ...grpc.CallOption) (*kvrpcpb.ResolveLockResponse, error)
 	KvGC(ctx context.Context, in *kvrpcpb.GCRequest, opts ...grpc.CallOption) (*kvrpcpb.GCResponse, error)
 	KvDeleteRange(ctx context.Context, in *kvrpcpb.DeleteRangeRequest, opts ...grpc.CallOption) (*kvrpcpb.DeleteRangeResponse, error)
-	// RawKV commands.
+	// Raw commands; no transaction support.
 	RawGet(ctx context.Context, in *kvrpcpb.RawGetRequest, opts ...grpc.CallOption) (*kvrpcpb.RawGetResponse, error)
 	RawBatchGet(ctx context.Context, in *kvrpcpb.RawBatchGetRequest, opts ...grpc.CallOption) (*kvrpcpb.RawBatchGetResponse, error)
 	RawPut(ctx context.Context, in *kvrpcpb.RawPutRequest, opts ...grpc.CallOption) (*kvrpcpb.RawPutResponse, error)
@@ -2211,21 +2583,36 @@ type TikvClient interface {
 	RawScan(ctx context.Context, in *kvrpcpb.RawScanRequest, opts ...grpc.CallOption) (*kvrpcpb.RawScanResponse, error)
 	RawDeleteRange(ctx context.Context, in *kvrpcpb.RawDeleteRangeRequest, opts ...grpc.CallOption) (*kvrpcpb.RawDeleteRangeResponse, error)
 	RawBatchScan(ctx context.Context, in *kvrpcpb.RawBatchScanRequest, opts ...grpc.CallOption) (*kvrpcpb.RawBatchScanResponse, error)
-	// Store commands (to the whole tikv but not a certain region)
+	// VerKV commands.
+	VerGet(ctx context.Context, in *kvrpcpb.VerGetRequest, opts ...grpc.CallOption) (*kvrpcpb.VerGetResponse, error)
+	VerBatchGet(ctx context.Context, in *kvrpcpb.VerBatchGetRequest, opts ...grpc.CallOption) (*kvrpcpb.VerBatchGetResponse, error)
+	VerMut(ctx context.Context, in *kvrpcpb.VerMutRequest, opts ...grpc.CallOption) (*kvrpcpb.VerMutResponse, error)
+	VerBatchMut(ctx context.Context, in *kvrpcpb.VerBatchMutRequest, opts ...grpc.CallOption) (*kvrpcpb.VerBatchMutResponse, error)
+	VerScan(ctx context.Context, in *kvrpcpb.VerScanRequest, opts ...grpc.CallOption) (*kvrpcpb.VerScanResponse, error)
+	VerDeleteRange(ctx context.Context, in *kvrpcpb.VerDeleteRangeRequest, opts ...grpc.CallOption) (*kvrpcpb.VerDeleteRangeResponse, error)
+	// Store commands (sent to a each TiKV node in a cluster, rather than a certain region).
 	UnsafeDestroyRange(ctx context.Context, in *kvrpcpb.UnsafeDestroyRangeRequest, opts ...grpc.CallOption) (*kvrpcpb.UnsafeDestroyRangeResponse, error)
-	// SQL push down commands.
+	RegisterLockObserver(ctx context.Context, in *kvrpcpb.RegisterLockObserverRequest, opts ...grpc.CallOption) (*kvrpcpb.RegisterLockObserverResponse, error)
+	CheckLockObserver(ctx context.Context, in *kvrpcpb.CheckLockObserverRequest, opts ...grpc.CallOption) (*kvrpcpb.CheckLockObserverResponse, error)
+	RemoveLockObserver(ctx context.Context, in *kvrpcpb.RemoveLockObserverRequest, opts ...grpc.CallOption) (*kvrpcpb.RemoveLockObserverResponse, error)
+	PhysicalScanLock(ctx context.Context, in *kvrpcpb.PhysicalScanLockRequest, opts ...grpc.CallOption) (*kvrpcpb.PhysicalScanLockResponse, error)
+	// Commands for executing SQL in the TiKV coprocessor (i.e., 'pushed down' to TiKV rather than
+	// executed in TiDB).
 	Coprocessor(ctx context.Context, in *coprocessor.Request, opts ...grpc.CallOption) (*coprocessor.Response, error)
 	CoprocessorStream(ctx context.Context, in *coprocessor.Request, opts ...grpc.CallOption) (Tikv_CoprocessorStreamClient, error)
-	// Raft commands (tikv <-> tikv).
+	BatchCoprocessor(ctx context.Context, in *coprocessor.BatchRequest, opts ...grpc.CallOption) (Tikv_BatchCoprocessorClient, error)
+	// Raft commands (sent between TiKV nodes).
 	Raft(ctx context.Context, opts ...grpc.CallOption) (Tikv_RaftClient, error)
 	BatchRaft(ctx context.Context, opts ...grpc.CallOption) (Tikv_BatchRaftClient, error)
 	Snapshot(ctx context.Context, opts ...grpc.CallOption) (Tikv_SnapshotClient, error)
-	// Region commands.
+	// Sent from PD or TiDB to a TiKV node.
 	SplitRegion(ctx context.Context, in *kvrpcpb.SplitRegionRequest, opts ...grpc.CallOption) (*kvrpcpb.SplitRegionResponse, error)
+	// Sent from TiFlash or TiKV to a TiKV node.
 	ReadIndex(ctx context.Context, in *kvrpcpb.ReadIndexRequest, opts ...grpc.CallOption) (*kvrpcpb.ReadIndexResponse, error)
-	// transaction debugger commands.
+	// Commands for debugging transactions.
 	MvccGetByKey(ctx context.Context, in *kvrpcpb.MvccGetByKeyRequest, opts ...grpc.CallOption) (*kvrpcpb.MvccGetByKeyResponse, error)
 	MvccGetByStartTs(ctx context.Context, in *kvrpcpb.MvccGetByStartTsRequest, opts ...grpc.CallOption) (*kvrpcpb.MvccGetByStartTsResponse, error)
+	// Batched commands.
 	BatchCommands(ctx context.Context, opts ...grpc.CallOption) (Tikv_BatchCommandsClient, error)
 }
 
@@ -2462,9 +2849,99 @@ func (c *tikvClient) RawBatchScan(ctx context.Context, in *kvrpcpb.RawBatchScanR
 	return out, nil
 }
 
+func (c *tikvClient) VerGet(ctx context.Context, in *kvrpcpb.VerGetRequest, opts ...grpc.CallOption) (*kvrpcpb.VerGetResponse, error) {
+	out := new(kvrpcpb.VerGetResponse)
+	err := c.cc.Invoke(ctx, "/tikvpb.Tikv/VerGet", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *tikvClient) VerBatchGet(ctx context.Context, in *kvrpcpb.VerBatchGetRequest, opts ...grpc.CallOption) (*kvrpcpb.VerBatchGetResponse, error) {
+	out := new(kvrpcpb.VerBatchGetResponse)
+	err := c.cc.Invoke(ctx, "/tikvpb.Tikv/VerBatchGet", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *tikvClient) VerMut(ctx context.Context, in *kvrpcpb.VerMutRequest, opts ...grpc.CallOption) (*kvrpcpb.VerMutResponse, error) {
+	out := new(kvrpcpb.VerMutResponse)
+	err := c.cc.Invoke(ctx, "/tikvpb.Tikv/VerMut", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *tikvClient) VerBatchMut(ctx context.Context, in *kvrpcpb.VerBatchMutRequest, opts ...grpc.CallOption) (*kvrpcpb.VerBatchMutResponse, error) {
+	out := new(kvrpcpb.VerBatchMutResponse)
+	err := c.cc.Invoke(ctx, "/tikvpb.Tikv/VerBatchMut", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *tikvClient) VerScan(ctx context.Context, in *kvrpcpb.VerScanRequest, opts ...grpc.CallOption) (*kvrpcpb.VerScanResponse, error) {
+	out := new(kvrpcpb.VerScanResponse)
+	err := c.cc.Invoke(ctx, "/tikvpb.Tikv/VerScan", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *tikvClient) VerDeleteRange(ctx context.Context, in *kvrpcpb.VerDeleteRangeRequest, opts ...grpc.CallOption) (*kvrpcpb.VerDeleteRangeResponse, error) {
+	out := new(kvrpcpb.VerDeleteRangeResponse)
+	err := c.cc.Invoke(ctx, "/tikvpb.Tikv/VerDeleteRange", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *tikvClient) UnsafeDestroyRange(ctx context.Context, in *kvrpcpb.UnsafeDestroyRangeRequest, opts ...grpc.CallOption) (*kvrpcpb.UnsafeDestroyRangeResponse, error) {
 	out := new(kvrpcpb.UnsafeDestroyRangeResponse)
 	err := c.cc.Invoke(ctx, "/tikvpb.Tikv/UnsafeDestroyRange", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *tikvClient) RegisterLockObserver(ctx context.Context, in *kvrpcpb.RegisterLockObserverRequest, opts ...grpc.CallOption) (*kvrpcpb.RegisterLockObserverResponse, error) {
+	out := new(kvrpcpb.RegisterLockObserverResponse)
+	err := c.cc.Invoke(ctx, "/tikvpb.Tikv/RegisterLockObserver", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *tikvClient) CheckLockObserver(ctx context.Context, in *kvrpcpb.CheckLockObserverRequest, opts ...grpc.CallOption) (*kvrpcpb.CheckLockObserverResponse, error) {
+	out := new(kvrpcpb.CheckLockObserverResponse)
+	err := c.cc.Invoke(ctx, "/tikvpb.Tikv/CheckLockObserver", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *tikvClient) RemoveLockObserver(ctx context.Context, in *kvrpcpb.RemoveLockObserverRequest, opts ...grpc.CallOption) (*kvrpcpb.RemoveLockObserverResponse, error) {
+	out := new(kvrpcpb.RemoveLockObserverResponse)
+	err := c.cc.Invoke(ctx, "/tikvpb.Tikv/RemoveLockObserver", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *tikvClient) PhysicalScanLock(ctx context.Context, in *kvrpcpb.PhysicalScanLockRequest, opts ...grpc.CallOption) (*kvrpcpb.PhysicalScanLockResponse, error) {
+	out := new(kvrpcpb.PhysicalScanLockResponse)
+	err := c.cc.Invoke(ctx, "/tikvpb.Tikv/PhysicalScanLock", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -2512,8 +2989,40 @@ func (x *tikvCoprocessorStreamClient) Recv() (*coprocessor.Response, error) {
 	return m, nil
 }
 
+func (c *tikvClient) BatchCoprocessor(ctx context.Context, in *coprocessor.BatchRequest, opts ...grpc.CallOption) (Tikv_BatchCoprocessorClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_Tikv_serviceDesc.Streams[1], "/tikvpb.Tikv/BatchCoprocessor", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &tikvBatchCoprocessorClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type Tikv_BatchCoprocessorClient interface {
+	Recv() (*coprocessor.BatchResponse, error)
+	grpc.ClientStream
+}
+
+type tikvBatchCoprocessorClient struct {
+	grpc.ClientStream
+}
+
+func (x *tikvBatchCoprocessorClient) Recv() (*coprocessor.BatchResponse, error) {
+	m := new(coprocessor.BatchResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 func (c *tikvClient) Raft(ctx context.Context, opts ...grpc.CallOption) (Tikv_RaftClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_Tikv_serviceDesc.Streams[1], "/tikvpb.Tikv/Raft", opts...)
+	stream, err := c.cc.NewStream(ctx, &_Tikv_serviceDesc.Streams[2], "/tikvpb.Tikv/Raft", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -2547,7 +3056,7 @@ func (x *tikvRaftClient) CloseAndRecv() (*raft_serverpb.Done, error) {
 }
 
 func (c *tikvClient) BatchRaft(ctx context.Context, opts ...grpc.CallOption) (Tikv_BatchRaftClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_Tikv_serviceDesc.Streams[2], "/tikvpb.Tikv/BatchRaft", opts...)
+	stream, err := c.cc.NewStream(ctx, &_Tikv_serviceDesc.Streams[3], "/tikvpb.Tikv/BatchRaft", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -2581,7 +3090,7 @@ func (x *tikvBatchRaftClient) CloseAndRecv() (*raft_serverpb.Done, error) {
 }
 
 func (c *tikvClient) Snapshot(ctx context.Context, opts ...grpc.CallOption) (Tikv_SnapshotClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_Tikv_serviceDesc.Streams[3], "/tikvpb.Tikv/Snapshot", opts...)
+	stream, err := c.cc.NewStream(ctx, &_Tikv_serviceDesc.Streams[4], "/tikvpb.Tikv/Snapshot", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -2651,7 +3160,7 @@ func (c *tikvClient) MvccGetByStartTs(ctx context.Context, in *kvrpcpb.MvccGetBy
 }
 
 func (c *tikvClient) BatchCommands(ctx context.Context, opts ...grpc.CallOption) (Tikv_BatchCommandsClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_Tikv_serviceDesc.Streams[4], "/tikvpb.Tikv/BatchCommands", opts...)
+	stream, err := c.cc.NewStream(ctx, &_Tikv_serviceDesc.Streams[5], "/tikvpb.Tikv/BatchCommands", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -2684,7 +3193,7 @@ func (x *tikvBatchCommandsClient) Recv() (*BatchCommandsResponse, error) {
 // Server API for Tikv service
 
 type TikvServer interface {
-	// KV commands with mvcc/txn supported.
+	// Commands using a transactional interface.
 	KvGet(context.Context, *kvrpcpb.GetRequest) (*kvrpcpb.GetResponse, error)
 	KvScan(context.Context, *kvrpcpb.ScanRequest) (*kvrpcpb.ScanResponse, error)
 	KvPrewrite(context.Context, *kvrpcpb.PrewriteRequest) (*kvrpcpb.PrewriteResponse, error)
@@ -2701,7 +3210,7 @@ type TikvServer interface {
 	KvResolveLock(context.Context, *kvrpcpb.ResolveLockRequest) (*kvrpcpb.ResolveLockResponse, error)
 	KvGC(context.Context, *kvrpcpb.GCRequest) (*kvrpcpb.GCResponse, error)
 	KvDeleteRange(context.Context, *kvrpcpb.DeleteRangeRequest) (*kvrpcpb.DeleteRangeResponse, error)
-	// RawKV commands.
+	// Raw commands; no transaction support.
 	RawGet(context.Context, *kvrpcpb.RawGetRequest) (*kvrpcpb.RawGetResponse, error)
 	RawBatchGet(context.Context, *kvrpcpb.RawBatchGetRequest) (*kvrpcpb.RawBatchGetResponse, error)
 	RawPut(context.Context, *kvrpcpb.RawPutRequest) (*kvrpcpb.RawPutResponse, error)
@@ -2711,21 +3220,36 @@ type TikvServer interface {
 	RawScan(context.Context, *kvrpcpb.RawScanRequest) (*kvrpcpb.RawScanResponse, error)
 	RawDeleteRange(context.Context, *kvrpcpb.RawDeleteRangeRequest) (*kvrpcpb.RawDeleteRangeResponse, error)
 	RawBatchScan(context.Context, *kvrpcpb.RawBatchScanRequest) (*kvrpcpb.RawBatchScanResponse, error)
-	// Store commands (to the whole tikv but not a certain region)
+	// VerKV commands.
+	VerGet(context.Context, *kvrpcpb.VerGetRequest) (*kvrpcpb.VerGetResponse, error)
+	VerBatchGet(context.Context, *kvrpcpb.VerBatchGetRequest) (*kvrpcpb.VerBatchGetResponse, error)
+	VerMut(context.Context, *kvrpcpb.VerMutRequest) (*kvrpcpb.VerMutResponse, error)
+	VerBatchMut(context.Context, *kvrpcpb.VerBatchMutRequest) (*kvrpcpb.VerBatchMutResponse, error)
+	VerScan(context.Context, *kvrpcpb.VerScanRequest) (*kvrpcpb.VerScanResponse, error)
+	VerDeleteRange(context.Context, *kvrpcpb.VerDeleteRangeRequest) (*kvrpcpb.VerDeleteRangeResponse, error)
+	// Store commands (sent to a each TiKV node in a cluster, rather than a certain region).
 	UnsafeDestroyRange(context.Context, *kvrpcpb.UnsafeDestroyRangeRequest) (*kvrpcpb.UnsafeDestroyRangeResponse, error)
-	// SQL push down commands.
+	RegisterLockObserver(context.Context, *kvrpcpb.RegisterLockObserverRequest) (*kvrpcpb.RegisterLockObserverResponse, error)
+	CheckLockObserver(context.Context, *kvrpcpb.CheckLockObserverRequest) (*kvrpcpb.CheckLockObserverResponse, error)
+	RemoveLockObserver(context.Context, *kvrpcpb.RemoveLockObserverRequest) (*kvrpcpb.RemoveLockObserverResponse, error)
+	PhysicalScanLock(context.Context, *kvrpcpb.PhysicalScanLockRequest) (*kvrpcpb.PhysicalScanLockResponse, error)
+	// Commands for executing SQL in the TiKV coprocessor (i.e., 'pushed down' to TiKV rather than
+	// executed in TiDB).
 	Coprocessor(context.Context, *coprocessor.Request) (*coprocessor.Response, error)
 	CoprocessorStream(*coprocessor.Request, Tikv_CoprocessorStreamServer) error
-	// Raft commands (tikv <-> tikv).
+	BatchCoprocessor(*coprocessor.BatchRequest, Tikv_BatchCoprocessorServer) error
+	// Raft commands (sent between TiKV nodes).
 	Raft(Tikv_RaftServer) error
 	BatchRaft(Tikv_BatchRaftServer) error
 	Snapshot(Tikv_SnapshotServer) error
-	// Region commands.
+	// Sent from PD or TiDB to a TiKV node.
 	SplitRegion(context.Context, *kvrpcpb.SplitRegionRequest) (*kvrpcpb.SplitRegionResponse, error)
+	// Sent from TiFlash or TiKV to a TiKV node.
 	ReadIndex(context.Context, *kvrpcpb.ReadIndexRequest) (*kvrpcpb.ReadIndexResponse, error)
-	// transaction debugger commands.
+	// Commands for debugging transactions.
 	MvccGetByKey(context.Context, *kvrpcpb.MvccGetByKeyRequest) (*kvrpcpb.MvccGetByKeyResponse, error)
 	MvccGetByStartTs(context.Context, *kvrpcpb.MvccGetByStartTsRequest) (*kvrpcpb.MvccGetByStartTsResponse, error)
+	// Batched commands.
 	BatchCommands(Tikv_BatchCommandsServer) error
 }
 
@@ -3183,6 +3707,114 @@ func _Tikv_RawBatchScan_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Tikv_VerGet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(kvrpcpb.VerGetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TikvServer).VerGet(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/tikvpb.Tikv/VerGet",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TikvServer).VerGet(ctx, req.(*kvrpcpb.VerGetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Tikv_VerBatchGet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(kvrpcpb.VerBatchGetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TikvServer).VerBatchGet(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/tikvpb.Tikv/VerBatchGet",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TikvServer).VerBatchGet(ctx, req.(*kvrpcpb.VerBatchGetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Tikv_VerMut_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(kvrpcpb.VerMutRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TikvServer).VerMut(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/tikvpb.Tikv/VerMut",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TikvServer).VerMut(ctx, req.(*kvrpcpb.VerMutRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Tikv_VerBatchMut_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(kvrpcpb.VerBatchMutRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TikvServer).VerBatchMut(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/tikvpb.Tikv/VerBatchMut",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TikvServer).VerBatchMut(ctx, req.(*kvrpcpb.VerBatchMutRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Tikv_VerScan_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(kvrpcpb.VerScanRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TikvServer).VerScan(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/tikvpb.Tikv/VerScan",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TikvServer).VerScan(ctx, req.(*kvrpcpb.VerScanRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Tikv_VerDeleteRange_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(kvrpcpb.VerDeleteRangeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TikvServer).VerDeleteRange(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/tikvpb.Tikv/VerDeleteRange",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TikvServer).VerDeleteRange(ctx, req.(*kvrpcpb.VerDeleteRangeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Tikv_UnsafeDestroyRange_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(kvrpcpb.UnsafeDestroyRangeRequest)
 	if err := dec(in); err != nil {
@@ -3197,6 +3829,78 @@ func _Tikv_UnsafeDestroyRange_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TikvServer).UnsafeDestroyRange(ctx, req.(*kvrpcpb.UnsafeDestroyRangeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Tikv_RegisterLockObserver_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(kvrpcpb.RegisterLockObserverRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TikvServer).RegisterLockObserver(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/tikvpb.Tikv/RegisterLockObserver",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TikvServer).RegisterLockObserver(ctx, req.(*kvrpcpb.RegisterLockObserverRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Tikv_CheckLockObserver_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(kvrpcpb.CheckLockObserverRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TikvServer).CheckLockObserver(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/tikvpb.Tikv/CheckLockObserver",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TikvServer).CheckLockObserver(ctx, req.(*kvrpcpb.CheckLockObserverRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Tikv_RemoveLockObserver_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(kvrpcpb.RemoveLockObserverRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TikvServer).RemoveLockObserver(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/tikvpb.Tikv/RemoveLockObserver",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TikvServer).RemoveLockObserver(ctx, req.(*kvrpcpb.RemoveLockObserverRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Tikv_PhysicalScanLock_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(kvrpcpb.PhysicalScanLockRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TikvServer).PhysicalScanLock(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/tikvpb.Tikv/PhysicalScanLock",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TikvServer).PhysicalScanLock(ctx, req.(*kvrpcpb.PhysicalScanLockRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -3237,6 +3941,27 @@ type tikvCoprocessorStreamServer struct {
 }
 
 func (x *tikvCoprocessorStreamServer) Send(m *coprocessor.Response) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func _Tikv_BatchCoprocessor_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(coprocessor.BatchRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(TikvServer).BatchCoprocessor(m, &tikvBatchCoprocessorServer{stream})
+}
+
+type Tikv_BatchCoprocessorServer interface {
+	Send(*coprocessor.BatchResponse) error
+	grpc.ServerStream
+}
+
+type tikvBatchCoprocessorServer struct {
+	grpc.ServerStream
+}
+
+func (x *tikvBatchCoprocessorServer) Send(m *coprocessor.BatchResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
@@ -3521,8 +4246,48 @@ var _Tikv_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Tikv_RawBatchScan_Handler,
 		},
 		{
+			MethodName: "VerGet",
+			Handler:    _Tikv_VerGet_Handler,
+		},
+		{
+			MethodName: "VerBatchGet",
+			Handler:    _Tikv_VerBatchGet_Handler,
+		},
+		{
+			MethodName: "VerMut",
+			Handler:    _Tikv_VerMut_Handler,
+		},
+		{
+			MethodName: "VerBatchMut",
+			Handler:    _Tikv_VerBatchMut_Handler,
+		},
+		{
+			MethodName: "VerScan",
+			Handler:    _Tikv_VerScan_Handler,
+		},
+		{
+			MethodName: "VerDeleteRange",
+			Handler:    _Tikv_VerDeleteRange_Handler,
+		},
+		{
 			MethodName: "UnsafeDestroyRange",
 			Handler:    _Tikv_UnsafeDestroyRange_Handler,
+		},
+		{
+			MethodName: "RegisterLockObserver",
+			Handler:    _Tikv_RegisterLockObserver_Handler,
+		},
+		{
+			MethodName: "CheckLockObserver",
+			Handler:    _Tikv_CheckLockObserver_Handler,
+		},
+		{
+			MethodName: "RemoveLockObserver",
+			Handler:    _Tikv_RemoveLockObserver_Handler,
+		},
+		{
+			MethodName: "PhysicalScanLock",
+			Handler:    _Tikv_PhysicalScanLock_Handler,
 		},
 		{
 			MethodName: "Coprocessor",
@@ -3549,6 +4314,11 @@ var _Tikv_serviceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "CoprocessorStream",
 			Handler:       _Tikv_CoprocessorStream_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "BatchCoprocessor",
+			Handler:       _Tikv_BatchCoprocessor_Handler,
 			ServerStreams: true,
 		},
 		{
@@ -4040,6 +4810,102 @@ func (m *BatchCommandsRequest_Request_TxnHeartBeat) MarshalTo(dAtA []byte) (int,
 	}
 	return i, nil
 }
+func (m *BatchCommandsRequest_Request_VerGet) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
+	if m.VerGet != nil {
+		dAtA[i] = 0xda
+		i++
+		dAtA[i] = 0x1
+		i++
+		i = encodeVarintTikvpb(dAtA, i, uint64(m.VerGet.Size()))
+		n30, err := m.VerGet.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n30
+	}
+	return i, nil
+}
+func (m *BatchCommandsRequest_Request_VerBatchGet) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
+	if m.VerBatchGet != nil {
+		dAtA[i] = 0xe2
+		i++
+		dAtA[i] = 0x1
+		i++
+		i = encodeVarintTikvpb(dAtA, i, uint64(m.VerBatchGet.Size()))
+		n31, err := m.VerBatchGet.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n31
+	}
+	return i, nil
+}
+func (m *BatchCommandsRequest_Request_VerMut) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
+	if m.VerMut != nil {
+		dAtA[i] = 0xea
+		i++
+		dAtA[i] = 0x1
+		i++
+		i = encodeVarintTikvpb(dAtA, i, uint64(m.VerMut.Size()))
+		n32, err := m.VerMut.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n32
+	}
+	return i, nil
+}
+func (m *BatchCommandsRequest_Request_VerBatchMut) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
+	if m.VerBatchMut != nil {
+		dAtA[i] = 0xf2
+		i++
+		dAtA[i] = 0x1
+		i++
+		i = encodeVarintTikvpb(dAtA, i, uint64(m.VerBatchMut.Size()))
+		n33, err := m.VerBatchMut.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n33
+	}
+	return i, nil
+}
+func (m *BatchCommandsRequest_Request_VerScan) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
+	if m.VerScan != nil {
+		dAtA[i] = 0xfa
+		i++
+		dAtA[i] = 0x1
+		i++
+		i = encodeVarintTikvpb(dAtA, i, uint64(m.VerScan.Size()))
+		n34, err := m.VerScan.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n34
+	}
+	return i, nil
+}
+func (m *BatchCommandsRequest_Request_VerDeleteRange) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
+	if m.VerDeleteRange != nil {
+		dAtA[i] = 0x82
+		i++
+		dAtA[i] = 0x2
+		i++
+		i = encodeVarintTikvpb(dAtA, i, uint64(m.VerDeleteRange.Size()))
+		n35, err := m.VerDeleteRange.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n35
+	}
+	return i, nil
+}
 func (m *BatchCommandsRequest_Request_Empty) MarshalTo(dAtA []byte) (int, error) {
 	i := 0
 	if m.Empty != nil {
@@ -4048,11 +4914,11 @@ func (m *BatchCommandsRequest_Request_Empty) MarshalTo(dAtA []byte) (int, error)
 		dAtA[i] = 0xf
 		i++
 		i = encodeVarintTikvpb(dAtA, i, uint64(m.Empty.Size()))
-		n30, err := m.Empty.MarshalTo(dAtA[i:])
+		n36, err := m.Empty.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n30
+		i += n36
 	}
 	return i, nil
 }
@@ -4084,21 +4950,21 @@ func (m *BatchCommandsResponse) MarshalTo(dAtA []byte) (int, error) {
 		}
 	}
 	if len(m.RequestIds) > 0 {
-		dAtA32 := make([]byte, len(m.RequestIds)*10)
-		var j31 int
+		dAtA38 := make([]byte, len(m.RequestIds)*10)
+		var j37 int
 		for _, num := range m.RequestIds {
 			for num >= 1<<7 {
-				dAtA32[j31] = uint8(uint64(num)&0x7f | 0x80)
+				dAtA38[j37] = uint8(uint64(num)&0x7f | 0x80)
 				num >>= 7
-				j31++
+				j37++
 			}
-			dAtA32[j31] = uint8(num)
-			j31++
+			dAtA38[j37] = uint8(num)
+			j37++
 		}
 		dAtA[i] = 0x12
 		i++
-		i = encodeVarintTikvpb(dAtA, i, uint64(j31))
-		i += copy(dAtA[i:], dAtA32[:j31])
+		i = encodeVarintTikvpb(dAtA, i, uint64(j37))
+		i += copy(dAtA[i:], dAtA38[:j37])
 	}
 	if m.TransportLayerLoad != 0 {
 		dAtA[i] = 0x18
@@ -4127,11 +4993,11 @@ func (m *BatchCommandsResponse_Response) MarshalTo(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if m.Cmd != nil {
-		nn33, err := m.Cmd.MarshalTo(dAtA[i:])
+		nn39, err := m.Cmd.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += nn33
+		i += nn39
 	}
 	if m.XXX_unrecognized != nil {
 		i += copy(dAtA[i:], m.XXX_unrecognized)
@@ -4145,11 +5011,11 @@ func (m *BatchCommandsResponse_Response_Get) MarshalTo(dAtA []byte) (int, error)
 		dAtA[i] = 0xa
 		i++
 		i = encodeVarintTikvpb(dAtA, i, uint64(m.Get.Size()))
-		n34, err := m.Get.MarshalTo(dAtA[i:])
+		n40, err := m.Get.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n34
+		i += n40
 	}
 	return i, nil
 }
@@ -4159,11 +5025,11 @@ func (m *BatchCommandsResponse_Response_Scan) MarshalTo(dAtA []byte) (int, error
 		dAtA[i] = 0x12
 		i++
 		i = encodeVarintTikvpb(dAtA, i, uint64(m.Scan.Size()))
-		n35, err := m.Scan.MarshalTo(dAtA[i:])
+		n41, err := m.Scan.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n35
+		i += n41
 	}
 	return i, nil
 }
@@ -4173,11 +5039,11 @@ func (m *BatchCommandsResponse_Response_Prewrite) MarshalTo(dAtA []byte) (int, e
 		dAtA[i] = 0x1a
 		i++
 		i = encodeVarintTikvpb(dAtA, i, uint64(m.Prewrite.Size()))
-		n36, err := m.Prewrite.MarshalTo(dAtA[i:])
+		n42, err := m.Prewrite.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n36
+		i += n42
 	}
 	return i, nil
 }
@@ -4187,11 +5053,11 @@ func (m *BatchCommandsResponse_Response_Commit) MarshalTo(dAtA []byte) (int, err
 		dAtA[i] = 0x22
 		i++
 		i = encodeVarintTikvpb(dAtA, i, uint64(m.Commit.Size()))
-		n37, err := m.Commit.MarshalTo(dAtA[i:])
+		n43, err := m.Commit.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n37
+		i += n43
 	}
 	return i, nil
 }
@@ -4201,11 +5067,11 @@ func (m *BatchCommandsResponse_Response_Import) MarshalTo(dAtA []byte) (int, err
 		dAtA[i] = 0x2a
 		i++
 		i = encodeVarintTikvpb(dAtA, i, uint64(m.Import.Size()))
-		n38, err := m.Import.MarshalTo(dAtA[i:])
+		n44, err := m.Import.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n38
+		i += n44
 	}
 	return i, nil
 }
@@ -4215,11 +5081,11 @@ func (m *BatchCommandsResponse_Response_Cleanup) MarshalTo(dAtA []byte) (int, er
 		dAtA[i] = 0x32
 		i++
 		i = encodeVarintTikvpb(dAtA, i, uint64(m.Cleanup.Size()))
-		n39, err := m.Cleanup.MarshalTo(dAtA[i:])
+		n45, err := m.Cleanup.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n39
+		i += n45
 	}
 	return i, nil
 }
@@ -4229,11 +5095,11 @@ func (m *BatchCommandsResponse_Response_BatchGet) MarshalTo(dAtA []byte) (int, e
 		dAtA[i] = 0x3a
 		i++
 		i = encodeVarintTikvpb(dAtA, i, uint64(m.BatchGet.Size()))
-		n40, err := m.BatchGet.MarshalTo(dAtA[i:])
+		n46, err := m.BatchGet.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n40
+		i += n46
 	}
 	return i, nil
 }
@@ -4243,11 +5109,11 @@ func (m *BatchCommandsResponse_Response_BatchRollback) MarshalTo(dAtA []byte) (i
 		dAtA[i] = 0x42
 		i++
 		i = encodeVarintTikvpb(dAtA, i, uint64(m.BatchRollback.Size()))
-		n41, err := m.BatchRollback.MarshalTo(dAtA[i:])
+		n47, err := m.BatchRollback.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n41
+		i += n47
 	}
 	return i, nil
 }
@@ -4257,11 +5123,11 @@ func (m *BatchCommandsResponse_Response_ScanLock) MarshalTo(dAtA []byte) (int, e
 		dAtA[i] = 0x4a
 		i++
 		i = encodeVarintTikvpb(dAtA, i, uint64(m.ScanLock.Size()))
-		n42, err := m.ScanLock.MarshalTo(dAtA[i:])
+		n48, err := m.ScanLock.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n42
+		i += n48
 	}
 	return i, nil
 }
@@ -4271,11 +5137,11 @@ func (m *BatchCommandsResponse_Response_ResolveLock) MarshalTo(dAtA []byte) (int
 		dAtA[i] = 0x52
 		i++
 		i = encodeVarintTikvpb(dAtA, i, uint64(m.ResolveLock.Size()))
-		n43, err := m.ResolveLock.MarshalTo(dAtA[i:])
+		n49, err := m.ResolveLock.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n43
+		i += n49
 	}
 	return i, nil
 }
@@ -4285,11 +5151,11 @@ func (m *BatchCommandsResponse_Response_GC) MarshalTo(dAtA []byte) (int, error) 
 		dAtA[i] = 0x5a
 		i++
 		i = encodeVarintTikvpb(dAtA, i, uint64(m.GC.Size()))
-		n44, err := m.GC.MarshalTo(dAtA[i:])
+		n50, err := m.GC.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n44
+		i += n50
 	}
 	return i, nil
 }
@@ -4299,11 +5165,11 @@ func (m *BatchCommandsResponse_Response_DeleteRange) MarshalTo(dAtA []byte) (int
 		dAtA[i] = 0x62
 		i++
 		i = encodeVarintTikvpb(dAtA, i, uint64(m.DeleteRange.Size()))
-		n45, err := m.DeleteRange.MarshalTo(dAtA[i:])
+		n51, err := m.DeleteRange.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n45
+		i += n51
 	}
 	return i, nil
 }
@@ -4313,11 +5179,11 @@ func (m *BatchCommandsResponse_Response_RawGet) MarshalTo(dAtA []byte) (int, err
 		dAtA[i] = 0x6a
 		i++
 		i = encodeVarintTikvpb(dAtA, i, uint64(m.RawGet.Size()))
-		n46, err := m.RawGet.MarshalTo(dAtA[i:])
+		n52, err := m.RawGet.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n46
+		i += n52
 	}
 	return i, nil
 }
@@ -4327,11 +5193,11 @@ func (m *BatchCommandsResponse_Response_RawBatchGet) MarshalTo(dAtA []byte) (int
 		dAtA[i] = 0x72
 		i++
 		i = encodeVarintTikvpb(dAtA, i, uint64(m.RawBatchGet.Size()))
-		n47, err := m.RawBatchGet.MarshalTo(dAtA[i:])
+		n53, err := m.RawBatchGet.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n47
+		i += n53
 	}
 	return i, nil
 }
@@ -4341,11 +5207,11 @@ func (m *BatchCommandsResponse_Response_RawPut) MarshalTo(dAtA []byte) (int, err
 		dAtA[i] = 0x7a
 		i++
 		i = encodeVarintTikvpb(dAtA, i, uint64(m.RawPut.Size()))
-		n48, err := m.RawPut.MarshalTo(dAtA[i:])
+		n54, err := m.RawPut.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n48
+		i += n54
 	}
 	return i, nil
 }
@@ -4357,11 +5223,11 @@ func (m *BatchCommandsResponse_Response_RawBatchPut) MarshalTo(dAtA []byte) (int
 		dAtA[i] = 0x1
 		i++
 		i = encodeVarintTikvpb(dAtA, i, uint64(m.RawBatchPut.Size()))
-		n49, err := m.RawBatchPut.MarshalTo(dAtA[i:])
+		n55, err := m.RawBatchPut.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n49
+		i += n55
 	}
 	return i, nil
 }
@@ -4373,11 +5239,11 @@ func (m *BatchCommandsResponse_Response_RawDelete) MarshalTo(dAtA []byte) (int, 
 		dAtA[i] = 0x1
 		i++
 		i = encodeVarintTikvpb(dAtA, i, uint64(m.RawDelete.Size()))
-		n50, err := m.RawDelete.MarshalTo(dAtA[i:])
+		n56, err := m.RawDelete.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n50
+		i += n56
 	}
 	return i, nil
 }
@@ -4389,11 +5255,11 @@ func (m *BatchCommandsResponse_Response_RawBatchDelete) MarshalTo(dAtA []byte) (
 		dAtA[i] = 0x1
 		i++
 		i = encodeVarintTikvpb(dAtA, i, uint64(m.RawBatchDelete.Size()))
-		n51, err := m.RawBatchDelete.MarshalTo(dAtA[i:])
+		n57, err := m.RawBatchDelete.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n51
+		i += n57
 	}
 	return i, nil
 }
@@ -4405,11 +5271,11 @@ func (m *BatchCommandsResponse_Response_RawScan) MarshalTo(dAtA []byte) (int, er
 		dAtA[i] = 0x1
 		i++
 		i = encodeVarintTikvpb(dAtA, i, uint64(m.RawScan.Size()))
-		n52, err := m.RawScan.MarshalTo(dAtA[i:])
+		n58, err := m.RawScan.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n52
+		i += n58
 	}
 	return i, nil
 }
@@ -4421,11 +5287,11 @@ func (m *BatchCommandsResponse_Response_RawDeleteRange) MarshalTo(dAtA []byte) (
 		dAtA[i] = 0x1
 		i++
 		i = encodeVarintTikvpb(dAtA, i, uint64(m.RawDeleteRange.Size()))
-		n53, err := m.RawDeleteRange.MarshalTo(dAtA[i:])
+		n59, err := m.RawDeleteRange.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n53
+		i += n59
 	}
 	return i, nil
 }
@@ -4437,11 +5303,11 @@ func (m *BatchCommandsResponse_Response_RawBatchScan) MarshalTo(dAtA []byte) (in
 		dAtA[i] = 0x1
 		i++
 		i = encodeVarintTikvpb(dAtA, i, uint64(m.RawBatchScan.Size()))
-		n54, err := m.RawBatchScan.MarshalTo(dAtA[i:])
+		n60, err := m.RawBatchScan.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n54
+		i += n60
 	}
 	return i, nil
 }
@@ -4453,11 +5319,11 @@ func (m *BatchCommandsResponse_Response_Coprocessor) MarshalTo(dAtA []byte) (int
 		dAtA[i] = 0x1
 		i++
 		i = encodeVarintTikvpb(dAtA, i, uint64(m.Coprocessor.Size()))
-		n55, err := m.Coprocessor.MarshalTo(dAtA[i:])
+		n61, err := m.Coprocessor.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n55
+		i += n61
 	}
 	return i, nil
 }
@@ -4469,11 +5335,11 @@ func (m *BatchCommandsResponse_Response_PessimisticLock) MarshalTo(dAtA []byte) 
 		dAtA[i] = 0x1
 		i++
 		i = encodeVarintTikvpb(dAtA, i, uint64(m.PessimisticLock.Size()))
-		n56, err := m.PessimisticLock.MarshalTo(dAtA[i:])
+		n62, err := m.PessimisticLock.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n56
+		i += n62
 	}
 	return i, nil
 }
@@ -4485,11 +5351,11 @@ func (m *BatchCommandsResponse_Response_PessimisticRollback) MarshalTo(dAtA []by
 		dAtA[i] = 0x1
 		i++
 		i = encodeVarintTikvpb(dAtA, i, uint64(m.PessimisticRollback.Size()))
-		n57, err := m.PessimisticRollback.MarshalTo(dAtA[i:])
+		n63, err := m.PessimisticRollback.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n57
+		i += n63
 	}
 	return i, nil
 }
@@ -4501,11 +5367,11 @@ func (m *BatchCommandsResponse_Response_CheckTxnStatus) MarshalTo(dAtA []byte) (
 		dAtA[i] = 0x1
 		i++
 		i = encodeVarintTikvpb(dAtA, i, uint64(m.CheckTxnStatus.Size()))
-		n58, err := m.CheckTxnStatus.MarshalTo(dAtA[i:])
+		n64, err := m.CheckTxnStatus.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n58
+		i += n64
 	}
 	return i, nil
 }
@@ -4517,11 +5383,107 @@ func (m *BatchCommandsResponse_Response_TxnHeartBeat) MarshalTo(dAtA []byte) (in
 		dAtA[i] = 0x1
 		i++
 		i = encodeVarintTikvpb(dAtA, i, uint64(m.TxnHeartBeat.Size()))
-		n59, err := m.TxnHeartBeat.MarshalTo(dAtA[i:])
+		n65, err := m.TxnHeartBeat.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n59
+		i += n65
+	}
+	return i, nil
+}
+func (m *BatchCommandsResponse_Response_VerGet) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
+	if m.VerGet != nil {
+		dAtA[i] = 0xda
+		i++
+		dAtA[i] = 0x1
+		i++
+		i = encodeVarintTikvpb(dAtA, i, uint64(m.VerGet.Size()))
+		n66, err := m.VerGet.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n66
+	}
+	return i, nil
+}
+func (m *BatchCommandsResponse_Response_VerBatchGet) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
+	if m.VerBatchGet != nil {
+		dAtA[i] = 0xe2
+		i++
+		dAtA[i] = 0x1
+		i++
+		i = encodeVarintTikvpb(dAtA, i, uint64(m.VerBatchGet.Size()))
+		n67, err := m.VerBatchGet.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n67
+	}
+	return i, nil
+}
+func (m *BatchCommandsResponse_Response_VerMut) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
+	if m.VerMut != nil {
+		dAtA[i] = 0xea
+		i++
+		dAtA[i] = 0x1
+		i++
+		i = encodeVarintTikvpb(dAtA, i, uint64(m.VerMut.Size()))
+		n68, err := m.VerMut.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n68
+	}
+	return i, nil
+}
+func (m *BatchCommandsResponse_Response_VerBatchMut) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
+	if m.VerBatchMut != nil {
+		dAtA[i] = 0xf2
+		i++
+		dAtA[i] = 0x1
+		i++
+		i = encodeVarintTikvpb(dAtA, i, uint64(m.VerBatchMut.Size()))
+		n69, err := m.VerBatchMut.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n69
+	}
+	return i, nil
+}
+func (m *BatchCommandsResponse_Response_VerScan) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
+	if m.VerScan != nil {
+		dAtA[i] = 0xfa
+		i++
+		dAtA[i] = 0x1
+		i++
+		i = encodeVarintTikvpb(dAtA, i, uint64(m.VerScan.Size()))
+		n70, err := m.VerScan.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n70
+	}
+	return i, nil
+}
+func (m *BatchCommandsResponse_Response_VerDeleteRange) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
+	if m.VerDeleteRange != nil {
+		dAtA[i] = 0x82
+		i++
+		dAtA[i] = 0x2
+		i++
+		i = encodeVarintTikvpb(dAtA, i, uint64(m.VerDeleteRange.Size()))
+		n71, err := m.VerDeleteRange.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n71
 	}
 	return i, nil
 }
@@ -4533,11 +5495,11 @@ func (m *BatchCommandsResponse_Response_Empty) MarshalTo(dAtA []byte) (int, erro
 		dAtA[i] = 0xf
 		i++
 		i = encodeVarintTikvpb(dAtA, i, uint64(m.Empty.Size()))
-		n60, err := m.Empty.MarshalTo(dAtA[i:])
+		n72, err := m.Empty.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n60
+		i += n72
 	}
 	return i, nil
 }
@@ -4908,6 +5870,60 @@ func (m *BatchCommandsRequest_Request_TxnHeartBeat) Size() (n int) {
 	}
 	return n
 }
+func (m *BatchCommandsRequest_Request_VerGet) Size() (n int) {
+	var l int
+	_ = l
+	if m.VerGet != nil {
+		l = m.VerGet.Size()
+		n += 2 + l + sovTikvpb(uint64(l))
+	}
+	return n
+}
+func (m *BatchCommandsRequest_Request_VerBatchGet) Size() (n int) {
+	var l int
+	_ = l
+	if m.VerBatchGet != nil {
+		l = m.VerBatchGet.Size()
+		n += 2 + l + sovTikvpb(uint64(l))
+	}
+	return n
+}
+func (m *BatchCommandsRequest_Request_VerMut) Size() (n int) {
+	var l int
+	_ = l
+	if m.VerMut != nil {
+		l = m.VerMut.Size()
+		n += 2 + l + sovTikvpb(uint64(l))
+	}
+	return n
+}
+func (m *BatchCommandsRequest_Request_VerBatchMut) Size() (n int) {
+	var l int
+	_ = l
+	if m.VerBatchMut != nil {
+		l = m.VerBatchMut.Size()
+		n += 2 + l + sovTikvpb(uint64(l))
+	}
+	return n
+}
+func (m *BatchCommandsRequest_Request_VerScan) Size() (n int) {
+	var l int
+	_ = l
+	if m.VerScan != nil {
+		l = m.VerScan.Size()
+		n += 2 + l + sovTikvpb(uint64(l))
+	}
+	return n
+}
+func (m *BatchCommandsRequest_Request_VerDeleteRange) Size() (n int) {
+	var l int
+	_ = l
+	if m.VerDeleteRange != nil {
+		l = m.VerDeleteRange.Size()
+		n += 2 + l + sovTikvpb(uint64(l))
+	}
+	return n
+}
 func (m *BatchCommandsRequest_Request_Empty) Size() (n int) {
 	var l int
 	_ = l
@@ -5184,6 +6200,60 @@ func (m *BatchCommandsResponse_Response_TxnHeartBeat) Size() (n int) {
 	_ = l
 	if m.TxnHeartBeat != nil {
 		l = m.TxnHeartBeat.Size()
+		n += 2 + l + sovTikvpb(uint64(l))
+	}
+	return n
+}
+func (m *BatchCommandsResponse_Response_VerGet) Size() (n int) {
+	var l int
+	_ = l
+	if m.VerGet != nil {
+		l = m.VerGet.Size()
+		n += 2 + l + sovTikvpb(uint64(l))
+	}
+	return n
+}
+func (m *BatchCommandsResponse_Response_VerBatchGet) Size() (n int) {
+	var l int
+	_ = l
+	if m.VerBatchGet != nil {
+		l = m.VerBatchGet.Size()
+		n += 2 + l + sovTikvpb(uint64(l))
+	}
+	return n
+}
+func (m *BatchCommandsResponse_Response_VerMut) Size() (n int) {
+	var l int
+	_ = l
+	if m.VerMut != nil {
+		l = m.VerMut.Size()
+		n += 2 + l + sovTikvpb(uint64(l))
+	}
+	return n
+}
+func (m *BatchCommandsResponse_Response_VerBatchMut) Size() (n int) {
+	var l int
+	_ = l
+	if m.VerBatchMut != nil {
+		l = m.VerBatchMut.Size()
+		n += 2 + l + sovTikvpb(uint64(l))
+	}
+	return n
+}
+func (m *BatchCommandsResponse_Response_VerScan) Size() (n int) {
+	var l int
+	_ = l
+	if m.VerScan != nil {
+		l = m.VerScan.Size()
+		n += 2 + l + sovTikvpb(uint64(l))
+	}
+	return n
+}
+func (m *BatchCommandsResponse_Response_VerDeleteRange) Size() (n int) {
+	var l int
+	_ = l
+	if m.VerDeleteRange != nil {
+		l = m.VerDeleteRange.Size()
 		n += 2 + l + sovTikvpb(uint64(l))
 	}
 	return n
@@ -6256,6 +7326,198 @@ func (m *BatchCommandsRequest_Request) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			m.Cmd = &BatchCommandsRequest_Request_TxnHeartBeat{v}
+			iNdEx = postIndex
+		case 27:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field VerGet", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTikvpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTikvpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &kvrpcpb.VerGetRequest{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Cmd = &BatchCommandsRequest_Request_VerGet{v}
+			iNdEx = postIndex
+		case 28:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field VerBatchGet", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTikvpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTikvpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &kvrpcpb.VerBatchGetRequest{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Cmd = &BatchCommandsRequest_Request_VerBatchGet{v}
+			iNdEx = postIndex
+		case 29:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field VerMut", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTikvpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTikvpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &kvrpcpb.VerMutRequest{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Cmd = &BatchCommandsRequest_Request_VerMut{v}
+			iNdEx = postIndex
+		case 30:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field VerBatchMut", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTikvpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTikvpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &kvrpcpb.VerBatchMutRequest{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Cmd = &BatchCommandsRequest_Request_VerBatchMut{v}
+			iNdEx = postIndex
+		case 31:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field VerScan", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTikvpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTikvpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &kvrpcpb.VerScanRequest{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Cmd = &BatchCommandsRequest_Request_VerScan{v}
+			iNdEx = postIndex
+		case 32:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field VerDeleteRange", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTikvpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTikvpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &kvrpcpb.VerDeleteRangeRequest{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Cmd = &BatchCommandsRequest_Request_VerDeleteRange{v}
 			iNdEx = postIndex
 		case 255:
 			if wireType != 2 {
@@ -7335,6 +8597,198 @@ func (m *BatchCommandsResponse_Response) Unmarshal(dAtA []byte) error {
 			}
 			m.Cmd = &BatchCommandsResponse_Response_TxnHeartBeat{v}
 			iNdEx = postIndex
+		case 27:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field VerGet", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTikvpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTikvpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &kvrpcpb.VerGetResponse{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Cmd = &BatchCommandsResponse_Response_VerGet{v}
+			iNdEx = postIndex
+		case 28:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field VerBatchGet", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTikvpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTikvpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &kvrpcpb.VerBatchGetResponse{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Cmd = &BatchCommandsResponse_Response_VerBatchGet{v}
+			iNdEx = postIndex
+		case 29:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field VerMut", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTikvpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTikvpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &kvrpcpb.VerMutResponse{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Cmd = &BatchCommandsResponse_Response_VerMut{v}
+			iNdEx = postIndex
+		case 30:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field VerBatchMut", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTikvpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTikvpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &kvrpcpb.VerBatchMutResponse{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Cmd = &BatchCommandsResponse_Response_VerBatchMut{v}
+			iNdEx = postIndex
+		case 31:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field VerScan", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTikvpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTikvpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &kvrpcpb.VerScanResponse{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Cmd = &BatchCommandsResponse_Response_VerScan{v}
+			iNdEx = postIndex
+		case 32:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field VerDeleteRange", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTikvpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTikvpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &kvrpcpb.VerDeleteRangeResponse{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Cmd = &BatchCommandsResponse_Response_VerDeleteRange{v}
+			iNdEx = postIndex
 		case 255:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Empty", wireType)
@@ -7735,118 +9189,138 @@ var (
 	ErrIntOverflowTikvpb   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("tikvpb.proto", fileDescriptor_tikvpb_352285c788f1f4e2) }
+func init() { proto.RegisterFile("tikvpb.proto", fileDescriptor_tikvpb_d5a2fed7d5e79d62) }
 
-var fileDescriptor_tikvpb_352285c788f1f4e2 = []byte{
-	// 1745 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x99, 0xdb, 0x52, 0xdc, 0x46,
-	0x1a, 0xc7, 0x35, 0x30, 0x9c, 0x9a, 0x73, 0x03, 0x46, 0xf4, 0x72, 0xb2, 0xec, 0xf5, 0x52, 0xbb,
-	0x55, 0xb3, 0x60, 0x7b, 0x97, 0xd8, 0x4e, 0x1c, 0xc2, 0xe0, 0x60, 0x3c, 0xb8, 0x42, 0x69, 0x70,
-	0xe2, 0x5c, 0x51, 0xf2, 0x4c, 0x1b, 0xa6, 0xe6, 0xa0, 0x89, 0xa4, 0x11, 0xe6, 0x11, 0xf2, 0x06,
-	0x79, 0x84, 0x3c, 0x44, 0x1e, 0x20, 0x97, 0xb9, 0x49, 0x55, 0x2e, 0x53, 0xce, 0x55, 0x2e, 0xf2,
-	0x0c, 0x49, 0x75, 0x4b, 0xea, 0x93, 0xba, 0x35, 0xce, 0x15, 0xe2, 0xfb, 0xbe, 0xff, 0xd7, 0x67,
-	0xfd, 0x3e, 0xf5, 0x80, 0x99, 0xa8, 0xd5, 0x8e, 0xfb, 0x6f, 0x2a, 0xfd, 0xc0, 0x8f, 0x7c, 0x38,
-	0x9e, 0xfc, 0x87, 0x16, 0x1b, 0x7e, 0x3f, 0xf0, 0x1b, 0x38, 0x0c, 0xfd, 0x20, 0x71, 0xa1, 0xd9,
-	0x76, 0x1c, 0xf4, 0x1b, 0x59, 0x24, 0x5a, 0x0a, 0xbc, 0xb7, 0xd1, 0x45, 0x88, 0x83, 0x18, 0x07,
-	0xcc, 0xb8, 0x7c, 0xe9, 0x5f, 0xfa, 0xf4, 0xf1, 0xbf, 0xe4, 0x29, 0xb5, 0xce, 0x07, 0x83, 0x30,
-	0xa2, 0x8f, 0x89, 0xc1, 0xf9, 0x7d, 0x16, 0x2c, 0x1f, 0x7a, 0x51, 0xe3, 0xaa, 0xea, 0x77, 0xbb,
-	0x5e, 0xaf, 0x19, 0xba, 0xf8, 0x9b, 0x01, 0x0e, 0x23, 0x78, 0x00, 0x26, 0x83, 0xe4, 0x31, 0xb4,
-	0x4b, 0xdb, 0xa3, 0x3b, 0xd3, 0xf7, 0xef, 0x56, 0xd2, 0xfe, 0xe9, 0xe2, 0x2b, 0xe9, 0x5f, 0x97,
-	0xa9, 0xe0, 0x16, 0x98, 0x4e, 0x9f, 0x2f, 0x5a, 0xcd, 0xd0, 0x1e, 0xd9, 0x1e, 0xdd, 0x29, 0xbb,
-	0x20, 0x35, 0x9d, 0x34, 0x43, 0xf4, 0xc7, 0x0c, 0x98, 0xc8, 0x9a, 0xfb, 0x17, 0x18, 0x3d, 0xc6,
-	0x91, 0x5d, 0xda, 0x2e, 0xed, 0x4c, 0xdf, 0x5f, 0xaa, 0x64, 0x03, 0x3c, 0xc6, 0x51, 0x1a, 0xf1,
-	0xdc, 0x72, 0x49, 0x04, 0xfc, 0x37, 0x28, 0xd7, 0x1b, 0x5e, 0xcf, 0x1e, 0xa1, 0x91, 0xcb, 0x2c,
-	0x92, 0x18, 0x79, 0x28, 0x8d, 0x81, 0xff, 0x07, 0x93, 0x67, 0x01, 0xbe, 0x0e, 0x5a, 0x11, 0xb6,
-	0x47, 0x69, 0xbc, 0xcd, 0xe2, 0x33, 0x07, 0xd7, 0xb0, 0x58, 0xb8, 0x0b, 0xc6, 0xc9, 0xf0, 0x5a,
-	0x91, 0x5d, 0xa6, 0xaa, 0x5b, 0x4c, 0x95, 0x98, 0xb9, 0x26, 0x8d, 0x23, 0x8a, 0x93, 0x6e, 0xdf,
-	0x0f, 0x22, 0x7b, 0x4c, 0x51, 0x24, 0x66, 0x41, 0x91, 0x18, 0xe0, 0x03, 0x30, 0x51, 0xed, 0x60,
-	0xaf, 0x37, 0xe8, 0xdb, 0xe3, 0x54, 0xb2, 0xca, 0x1b, 0x49, 0xec, 0x5c, 0x93, 0x45, 0x92, 0x01,
-	0xd1, 0xc9, 0x27, 0x53, 0x35, 0xa1, 0x0c, 0x28, 0x73, 0x08, 0x03, 0xca, 0x4c, 0xf0, 0x19, 0x98,
-	0xa5, 0xcf, 0xae, 0xdf, 0xe9, 0xbc, 0xf1, 0x1a, 0x6d, 0x7b, 0x92, 0x8a, 0x37, 0x64, 0x71, 0xe6,
-	0xe5, 0x19, 0x64, 0x15, 0x69, 0x9e, 0xcc, 0xeb, 0xa9, 0xdf, 0x68, 0xdb, 0x53, 0x4a, 0xf3, 0x99,
-	0x43, 0x68, 0x3e, 0x33, 0xc1, 0x4f, 0xc1, 0xb4, 0x8b, 0x43, 0xbf, 0x13, 0x63, 0x2a, 0x05, 0x54,
-	0xfa, 0x0f, 0x26, 0x15, 0x7c, 0x5c, 0x2d, 0x2a, 0xe0, 0x5d, 0x30, 0x72, 0x5c, 0xb5, 0xa7, 0xa9,
-	0x0e, 0xf2, 0xcd, 0x51, 0xe5, 0xe1, 0x23, 0xc7, 0x55, 0xd2, 0xcc, 0x11, 0xee, 0xe0, 0x08, 0xbb,
-	0x5e, 0xef, 0x12, 0xdb, 0x33, 0x4a, 0x33, 0x82, 0x4f, 0x68, 0x46, 0xb0, 0x92, 0x55, 0x74, 0xbd,
-	0x6b, 0x32, 0xb9, 0xb3, 0xca, 0x2a, 0x26, 0x66, 0x61, 0x15, 0x13, 0x03, 0x1d, 0x99, 0x77, 0xcd,
-	0xd6, 0x64, 0x4e, 0x1d, 0x19, 0xf7, 0x89, 0x23, 0xe3, 0xd6, 0xb4, 0xc9, 0xb3, 0x41, 0x64, 0xcf,
-	0xe7, 0x9b, 0x3c, 0x1b, 0x28, 0x4d, 0x9e, 0x0d, 0xa4, 0x26, 0x89, 0x6c, 0xc1, 0xd0, 0xa4, 0xa4,
-	0x15, 0x15, 0xf0, 0x11, 0x98, 0x72, 0xbd, 0xeb, 0x64, 0xdc, 0xf6, 0x22, 0x95, 0xaf, 0x89, 0xf2,
-	0x74, 0x46, 0x98, 0x98, 0x47, 0xc3, 0xe7, 0x60, 0x2e, 0xcb, 0x94, 0xea, 0x21, 0xd5, 0x6f, 0xe6,
-	0x9a, 0x57, 0x93, 0x28, 0x3a, 0xb2, 0xfd, 0x5d, 0xef, 0x9a, 0x9e, 0xe4, 0x25, 0x65, 0xfb, 0xa7,
-	0x76, 0x61, 0xfb, 0xa7, 0x96, 0xb4, 0x79, 0x71, 0x8d, 0x97, 0xf3, 0xcd, 0x6b, 0x97, 0x59, 0xd1,
-	0xc1, 0x43, 0x30, 0x93, 0x75, 0x88, 0xf6, 0x61, 0x85, 0xe6, 0x59, 0xcf, 0x0d, 0x43, 0xee, 0x88,
-	0xa4, 0x81, 0x1f, 0x81, 0xe9, 0x2a, 0x7f, 0x35, 0xdb, 0xb7, 0xd2, 0x17, 0x92, 0xf8, 0xba, 0x16,
-	0x56, 0x40, 0x08, 0x85, 0x35, 0x30, 0x7f, 0x86, 0xc3, 0xb0, 0xd5, 0x6d, 0x85, 0x51, 0xab, 0x41,
-	0xcf, 0xc4, 0x2a, 0x55, 0x6f, 0xf1, 0xd7, 0x93, 0xec, 0xe7, 0x89, 0x54, 0x25, 0xfc, 0x0a, 0x2c,
-	0x09, 0x26, 0x76, 0xc2, 0x6d, 0x9a, 0xf0, 0x8e, 0x2e, 0x61, 0xfe, 0x9c, 0xeb, 0x32, 0x90, 0xd9,
-	0xae, 0x5e, 0xe1, 0x46, 0xfb, 0xfc, 0x5d, 0xaf, 0x1e, 0x79, 0xd1, 0x20, 0xb4, 0xd7, 0x94, 0xd9,
-	0x96, 0xdd, 0xc2, 0x6c, 0xcb, 0x0e, 0x32, 0xdb, 0xe7, 0xef, 0x7a, 0xcf, 0xb1, 0x17, 0x44, 0x87,
-	0xd8, 0x8b, 0x6c, 0xa4, 0xcc, 0xb6, 0xe8, 0x14, 0x66, 0x5b, 0x34, 0xc3, 0xc7, 0x60, 0xec, 0x59,
-	0xb7, 0x1f, 0xdd, 0xd8, 0x7f, 0x26, 0x8c, 0xb8, 0xad, 0xa5, 0x11, 0x0d, 0xe1, 0x29, 0x12, 0xc9,
-	0xe1, 0x18, 0x18, 0x6d, 0x74, 0x9b, 0xce, 0x0f, 0x73, 0x60, 0x45, 0x61, 0x57, 0xd8, 0xf7, 0x7b,
-	0x21, 0x86, 0x47, 0x60, 0x2a, 0x48, 0x9f, 0x33, 0xda, 0xdd, 0x33, 0xd0, 0x2e, 0x89, 0xaa, 0x64,
-	0x0f, 0x2e, 0x17, 0x0e, 0x05, 0x1e, 0xdc, 0x05, 0xcb, 0x51, 0xe0, 0xf5, 0x42, 0x02, 0x80, 0x8b,
-	0x8e, 0x77, 0x83, 0x83, 0x8b, 0x8e, 0xef, 0x35, 0x29, 0x9b, 0xca, 0x2e, 0x64, 0xbe, 0x53, 0xe2,
-	0x3a, 0xf5, 0xbd, 0x26, 0xfa, 0x76, 0x16, 0x4c, 0xb2, 0x5e, 0xee, 0x88, 0x8c, 0x5c, 0x96, 0x19,
-	0x99, 0x84, 0x64, 0x90, 0xfc, 0x8f, 0x04, 0xc9, 0x15, 0x05, 0x92, 0x2c, 0x36, 0xa1, 0xe4, 0x7e,
-	0x8e, 0x92, 0x6b, 0x1a, 0x4a, 0x32, 0x11, 0xc7, 0xe4, 0x9e, 0x82, 0xc9, 0xd5, 0x1c, 0x26, 0x99,
-	0x28, 0xe3, 0xe4, 0x9e, 0xc2, 0xc9, 0xd5, 0x1c, 0x27, 0xb9, 0x24, 0x05, 0xe5, 0x43, 0x15, 0x94,
-	0x76, 0x1e, 0x94, 0x4c, 0xc4, 0x48, 0xb9, 0x9f, 0x23, 0xe5, 0x9a, 0x86, 0x94, 0x7c, 0x50, 0xec,
-	0x85, 0xfc, 0xb9, 0x1e, 0x95, 0x9b, 0x26, 0x54, 0xb2, 0x14, 0x0a, 0x2b, 0xf7, 0x73, 0xac, 0x5c,
-	0xd3, 0xb0, 0x92, 0x77, 0x80, 0xc1, 0xf2, 0x40, 0x07, 0xcb, 0x75, 0x3d, 0x2c, 0x99, 0x5c, 0xa2,
-	0xe5, 0x3f, 0x05, 0x5a, 0x2e, 0x49, 0xb4, 0x64, 0xf1, 0x04, 0x97, 0x07, 0x3a, 0x5c, 0xae, 0xeb,
-	0x71, 0xc9, 0x1b, 0x12, 0xdf, 0xa2, 0x7b, 0x0a, 0x2f, 0x57, 0x73, 0xbc, 0xe4, 0xab, 0x99, 0x02,
-	0xf3, 0x40, 0x07, 0xcc, 0x75, 0x3d, 0x30, 0x85, 0xd1, 0x09, 0xc4, 0xdc, 0x53, 0x88, 0xb9, 0x9a,
-	0x23, 0xa6, 0xd4, 0x28, 0x21, 0xde, 0x81, 0x0e, 0x99, 0xeb, 0x7a, 0x64, 0xe6, 0x1b, 0x25, 0x19,
-	0x1e, 0xe7, 0x99, 0x89, 0x74, 0xcc, 0x64, 0x6a, 0x01, 0x9a, 0x27, 0x06, 0x68, 0x6e, 0x19, 0xa1,
-	0xc9, 0xb2, 0xa8, 0xd4, 0x7c, 0xa8, 0x52, 0xd3, 0xce, 0x53, 0x93, 0x9f, 0x85, 0x0c, 0x9b, 0x27,
-	0x06, 0x6c, 0x6e, 0x19, 0xb1, 0x29, 0x75, 0x40, 0x5c, 0xf1, 0xaa, 0x96, 0x9b, 0x1b, 0x06, 0x6e,
-	0xb2, 0x34, 0x32, 0x38, 0x1f, 0xe9, 0xc0, 0xb9, 0xa2, 0x80, 0x93, 0xaf, 0x83, 0x48, 0xce, 0x53,
-	0x13, 0x39, 0xb7, 0xcd, 0xe4, 0x64, 0x99, 0x72, 0xe8, 0x7c, 0x5d, 0x84, 0xce, 0xbb, 0xc5, 0xe8,
-	0x64, 0x59, 0xb5, 0xec, 0x3c, 0x31, 0xb0, 0x73, 0xcb, 0xc8, 0x4e, 0x3e, 0xe5, 0x0a, 0x3c, 0xab,
-	0x5a, 0x78, 0x6e, 0x18, 0xe0, 0xc9, 0xa7, 0x5c, 0xa2, 0xe7, 0x13, 0x85, 0x9e, 0x4e, 0x11, 0x3d,
-	0x59, 0x0e, 0x19, 0x9f, 0x87, 0x60, 0x21, 0x79, 0xc5, 0x79, 0x6f, 0xa3, 0x97, 0x38, 0x0c, 0xbd,
-	0x4b, 0x0c, 0x2b, 0xa0, 0xdc, 0x0d, 0x2f, 0x33, 0x66, 0xa2, 0x8a, 0xfc, 0x25, 0x2a, 0x44, 0xba,
-	0x34, 0xce, 0xa9, 0x83, 0x35, 0x23, 0xaf, 0xe1, 0x2a, 0x98, 0x88, 0x12, 0x78, 0x52, 0xc6, 0x95,
-	0xdd, 0xf1, 0x88, 0x82, 0x13, 0x6e, 0x00, 0xd0, 0xc4, 0x1d, 0xef, 0xe6, 0x22, 0x6a, 0x75, 0x31,
-	0x85, 0x5a, 0xd9, 0x9d, 0xa2, 0x96, 0xf3, 0x56, 0x17, 0x3b, 0xff, 0x03, 0xc8, 0x3c, 0x0c, 0x63,
-	0xd6, 0xfb, 0x3f, 0x2f, 0x83, 0xf2, 0x79, 0xab, 0x1d, 0xc3, 0x87, 0x60, 0xac, 0x16, 0x93, 0x57,
-	0x8b, 0xee, 0xbb, 0x13, 0x69, 0x41, 0xeb, 0x58, 0x70, 0x1f, 0x8c, 0xd7, 0x62, 0xba, 0x9f, 0xb5,
-	0x1f, 0xa1, 0x48, 0x4f, 0x5d, 0xc7, 0x82, 0x55, 0x00, 0x6a, 0x31, 0x83, 0xa8, 0xf1, 0x8b, 0x14,
-	0x99, 0x29, 0xec, 0x58, 0xf0, 0x35, 0x58, 0xac, 0xc5, 0xea, 0x7e, 0x1e, 0x56, 0x3e, 0xa2, 0xa1,
-	0xa7, 0xc4, 0xb1, 0x60, 0x13, 0xac, 0xd4, 0xbe, 0xd4, 0xed, 0xe9, 0x0f, 0xa9, 0x25, 0xd1, 0x07,
-	0x9d, 0x1a, 0xc7, 0x82, 0x5f, 0x80, 0xb9, 0x5a, 0x2c, 0x6d, 0xd1, 0xc2, 0x72, 0x10, 0x15, 0xef,
-	0x77, 0xc7, 0x82, 0xaf, 0xc0, 0x42, 0x2d, 0x56, 0x8e, 0xce, 0x90, 0x4a, 0x15, 0x0d, 0x3b, 0x8d,
-	0x8e, 0x05, 0x3f, 0x01, 0x93, 0xb5, 0x38, 0x2d, 0x5e, 0x0c, 0xd7, 0x00, 0xc8, 0x54, 0xf7, 0x64,
-	0xf2, 0xb4, 0x90, 0x31, 0xdc, 0x09, 0x20, 0x53, 0x0d, 0xe4, 0x58, 0xf0, 0x00, 0x4c, 0xd5, 0xe2,
-	0xac, 0xa4, 0x31, 0x5d, 0x10, 0x20, 0x63, 0x41, 0x94, 0x6d, 0x36, 0xc6, 0x4e, 0xe3, 0x6d, 0x01,
-	0x32, 0x57, 0x47, 0x8e, 0x05, 0x5d, 0x30, 0x9f, 0x26, 0x61, 0x9b, 0xa1, 0xf8, 0xea, 0x00, 0x0d,
-	0x29, 0x97, 0xb2, 0x8e, 0xb1, 0xa2, 0xc7, 0x78, 0x8f, 0x80, 0xcc, 0x55, 0x93, 0x63, 0xc1, 0x53,
-	0x30, 0x5b, 0x8b, 0xc5, 0xd2, 0xa7, 0xe8, 0x52, 0x01, 0x15, 0x16, 0x51, 0x8e, 0x05, 0xf7, 0x40,
-	0xb9, 0x16, 0x1f, 0x57, 0xa1, 0xe6, 0x86, 0x01, 0xe9, 0xea, 0xa8, 0xac, 0x03, 0x22, 0x20, 0x8b,
-	0xae, 0x1b, 0x50, 0x61, 0x71, 0xe5, 0x58, 0xf0, 0x49, 0x56, 0x4f, 0x41, 0xc3, 0xcd, 0x03, 0x32,
-	0x55, 0x58, 0x8e, 0x05, 0x5f, 0x48, 0x95, 0x15, 0x2c, 0xba, 0x84, 0x40, 0x85, 0x05, 0x17, 0xeb,
-	0x08, 0x29, 0x7c, 0x0c, 0xf7, 0x11, 0xc8, 0x54, 0x75, 0xc9, 0x1d, 0x21, 0x19, 0x8a, 0xae, 0x26,
-	0x50, 0x61, 0x11, 0xe6, 0x58, 0xe4, 0xc3, 0x8c, 0x17, 0x52, 0xe6, 0x5b, 0x0a, 0x54, 0x50, 0x8c,
-	0x39, 0x16, 0xac, 0xab, 0x15, 0x18, 0x1c, 0x72, 0x61, 0x81, 0x86, 0xd5, 0x66, 0x8e, 0x05, 0x9f,
-	0xb2, 0x5a, 0x0c, 0x9a, 0xee, 0x2e, 0x90, 0xb1, 0x3c, 0x63, 0x9d, 0x12, 0xf7, 0xce, 0x90, 0x6b,
-	0x0c, 0x34, 0xac, 0x5e, 0x73, 0x2c, 0xf8, 0x52, 0xae, 0xcf, 0x60, 0xe1, 0x8d, 0x06, 0x2a, 0xae,
-	0xdb, 0x1c, 0x0b, 0x5e, 0x00, 0xf8, 0xaa, 0x17, 0x7a, 0x6f, 0xf1, 0x11, 0x0e, 0xa3, 0xc0, 0xbf,
-	0x49, 0xfa, 0xe9, 0x30, 0x59, 0xde, 0x99, 0xa5, 0xbe, 0x53, 0x18, 0xc3, 0x1a, 0xf8, 0x58, 0x2a,
-	0x05, 0xa1, 0xf6, 0xf6, 0x04, 0xe9, 0x4b, 0x43, 0xba, 0x3b, 0x16, 0x05, 0x75, 0x3d, 0x0a, 0xb0,
-	0xd7, 0xfd, 0x9b, 0x39, 0x76, 0x4b, 0xf0, 0x09, 0x28, 0x93, 0x42, 0x05, 0x16, 0x54, 0x2f, 0x68,
-	0x49, 0xf1, 0x1d, 0xf9, 0x3d, 0xec, 0x58, 0x3b, 0x25, 0xf8, 0x14, 0x4c, 0xb1, 0xa2, 0x08, 0xda,
-	0x52, 0x55, 0xf5, 0x41, 0xfa, 0xcf, 0xc0, 0x64, 0xbd, 0xe7, 0xf5, 0xc3, 0x2b, 0x9f, 0x10, 0x50,
-	0x0e, 0xca, 0x1c, 0xd5, 0xab, 0x41, 0xaf, 0x6d, 0x4e, 0xf1, 0x02, 0x4c, 0xd7, 0xfb, 0x1d, 0x82,
-	0x9d, 0xcb, 0x96, 0xdf, 0x13, 0xce, 0x9b, 0x60, 0xcd, 0x9f, 0x37, 0xc9, 0x29, 0x9d, 0x37, 0xec,
-	0x35, 0x4f, 0x7a, 0x4d, 0xfc, 0x4e, 0x3c, 0x6f, 0x99, 0x4d, 0x73, 0xde, 0xb8, 0x4b, 0xdc, 0x85,
-	0x2f, 0xe3, 0x46, 0xe3, 0x18, 0x47, 0x87, 0x37, 0x35, 0x7c, 0x23, 0xec, 0x42, 0xd1, 0x9c, 0xdf,
-	0x85, 0xb2, 0x97, 0xa5, 0xfb, 0x1a, 0x2c, 0x30, 0x4f, 0x3d, 0xf2, 0x82, 0xe8, 0x3c, 0x84, 0xdb,
-	0x79, 0x51, 0xea, 0xca, 0xd2, 0xde, 0x2e, 0x88, 0x10, 0xc8, 0x36, 0x2b, 0x95, 0x8e, 0x70, 0xbd,
-	0xe8, 0x47, 0x0e, 0xb4, 0x51, 0x78, 0x29, 0x44, 0x56, 0x63, 0xb7, 0x74, 0x78, 0xef, 0x97, 0xef,
-	0x27, 0x4b, 0x3f, 0xbe, 0xdf, 0x2c, 0xfd, 0xf4, 0x7e, 0xb3, 0xf4, 0xeb, 0xfb, 0xcd, 0xd2, 0x77,
-	0xbf, 0x6d, 0x5a, 0x60, 0xc1, 0x0f, 0x2e, 0xa9, 0xba, 0xd2, 0x8e, 0xe9, 0x4f, 0x2f, 0x6f, 0xc6,
-	0xe9, 0x9f, 0x07, 0x7f, 0x05, 0x00, 0x00, 0xff, 0xff, 0xbf, 0xbc, 0xcf, 0x8f, 0xf7, 0x19, 0x00,
-	0x00,
+var fileDescriptor_tikvpb_d5a2fed7d5e79d62 = []byte{
+	// 2069 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x99, 0xdb, 0x52, 0x1b, 0xc9,
+	0x19, 0x80, 0x47, 0x46, 0xc6, 0xd0, 0x18, 0x03, 0x0d, 0xac, 0x86, 0xb6, 0x38, 0x78, 0xd6, 0xbb,
+	0xa1, 0x92, 0x2a, 0xc5, 0x78, 0x9d, 0x90, 0x5d, 0x27, 0x0e, 0x41, 0x6c, 0x30, 0x2b, 0x54, 0x4b,
+	0x8d, 0x58, 0xb2, 0xa9, 0x4a, 0x15, 0x35, 0x48, 0x6d, 0xa1, 0xd2, 0x61, 0x94, 0x39, 0x61, 0xde,
+	0x24, 0x6f, 0x90, 0x3c, 0x4a, 0x2e, 0x52, 0xa9, 0x54, 0xae, 0x72, 0x99, 0x72, 0x5e, 0x21, 0xf7,
+	0x49, 0x75, 0xcf, 0x4c, 0x9f, 0xa6, 0x7b, 0xe4, 0xbd, 0x62, 0xf8, 0x8f, 0x7d, 0xfc, 0xe7, 0x9b,
+	0x5f, 0xe0, 0x71, 0x34, 0x18, 0x26, 0xd3, 0x9b, 0xc6, 0x34, 0xf0, 0x23, 0x1f, 0xce, 0xa7, 0xff,
+	0xa1, 0xb5, 0xae, 0x3f, 0x0d, 0xfc, 0x2e, 0x0e, 0x43, 0x3f, 0x48, 0x55, 0x68, 0x79, 0x98, 0x04,
+	0xd3, 0x6e, 0x6e, 0x89, 0xd6, 0x03, 0xef, 0x5d, 0x74, 0x1d, 0xe2, 0x20, 0xc1, 0x01, 0x13, 0x6e,
+	0xf4, 0xfd, 0xbe, 0x4f, 0x1f, 0x7f, 0x4a, 0x9e, 0x32, 0xe9, 0x4a, 0x10, 0x87, 0x11, 0x7d, 0x4c,
+	0x05, 0xce, 0xdf, 0x57, 0xc1, 0xc6, 0xb1, 0x17, 0x75, 0x6f, 0x9b, 0xfe, 0x78, 0xec, 0x4d, 0x7a,
+	0xa1, 0x8b, 0xff, 0x18, 0xe3, 0x30, 0x82, 0x47, 0x60, 0x21, 0x48, 0x1f, 0x43, 0xbb, 0xb2, 0x37,
+	0xb7, 0xbf, 0xf4, 0xf2, 0x79, 0x23, 0x1b, 0x9f, 0xce, 0xbe, 0x91, 0xfd, 0x75, 0x99, 0x17, 0xdc,
+	0x05, 0x4b, 0xd9, 0xf3, 0xf5, 0xa0, 0x17, 0xda, 0x0f, 0xf6, 0xe6, 0xf6, 0xab, 0x2e, 0xc8, 0x44,
+	0x67, 0xbd, 0x10, 0xfd, 0x73, 0x05, 0x3c, 0xca, 0xd3, 0xfd, 0x08, 0xcc, 0x9d, 0xe2, 0xc8, 0xae,
+	0xec, 0x55, 0xf6, 0x97, 0x5e, 0xae, 0x37, 0xf2, 0x09, 0x9e, 0xe2, 0x28, 0xb3, 0x78, 0x6b, 0xb9,
+	0xc4, 0x02, 0xfe, 0x18, 0x54, 0x3b, 0x5d, 0x6f, 0x62, 0x3f, 0xa0, 0x96, 0x1b, 0xcc, 0x92, 0x08,
+	0xb9, 0x29, 0xb5, 0x81, 0x3f, 0x07, 0x0b, 0x17, 0x01, 0xbe, 0x0b, 0x06, 0x11, 0xb6, 0xe7, 0xa8,
+	0xbd, 0xcd, 0xec, 0x73, 0x05, 0xf7, 0x61, 0xb6, 0xf0, 0x05, 0x98, 0x27, 0xd3, 0x1b, 0x44, 0x76,
+	0x95, 0x7a, 0x7d, 0xc2, 0xbc, 0x52, 0x31, 0xf7, 0xc9, 0xec, 0x88, 0xc7, 0xd9, 0x78, 0xea, 0x07,
+	0x91, 0xfd, 0x50, 0xf1, 0x48, 0xc5, 0x82, 0x47, 0x2a, 0x80, 0x5f, 0x80, 0x47, 0xcd, 0x11, 0xf6,
+	0x26, 0xf1, 0xd4, 0x9e, 0xa7, 0x2e, 0x35, 0x9e, 0x24, 0x95, 0x73, 0x9f, 0xdc, 0x92, 0x4c, 0x88,
+	0x2e, 0x3e, 0x59, 0xaa, 0x47, 0xca, 0x84, 0x72, 0x85, 0x30, 0xa1, 0x5c, 0x04, 0xbf, 0x06, 0xcb,
+	0xf4, 0xd9, 0xf5, 0x47, 0xa3, 0x1b, 0xaf, 0x3b, 0xb4, 0x17, 0xa8, 0xf3, 0xb6, 0xec, 0x9c, 0x6b,
+	0x79, 0x04, 0xd9, 0x8b, 0xa4, 0x27, 0xeb, 0x7a, 0xee, 0x77, 0x87, 0xf6, 0xa2, 0x92, 0x3e, 0x57,
+	0x08, 0xe9, 0x73, 0x11, 0xfc, 0x35, 0x58, 0x72, 0x71, 0xe8, 0x8f, 0x12, 0x4c, 0x5d, 0x01, 0x75,
+	0x7d, 0xca, 0x5c, 0x05, 0x1d, 0xf7, 0x16, 0x3d, 0xe0, 0x73, 0xf0, 0xe0, 0xb4, 0x69, 0x2f, 0x51,
+	0x3f, 0xc8, 0x0f, 0x47, 0x93, 0x9b, 0x3f, 0x38, 0x6d, 0x92, 0x34, 0x27, 0x78, 0x84, 0x23, 0xec,
+	0x7a, 0x93, 0x3e, 0xb6, 0x1f, 0x2b, 0x69, 0x04, 0x9d, 0x90, 0x46, 0x90, 0x92, 0x5d, 0x74, 0xbd,
+	0x3b, 0xb2, 0xb8, 0xcb, 0xca, 0x2e, 0xa6, 0x62, 0x61, 0x17, 0x53, 0x01, 0x9d, 0x99, 0x77, 0xc7,
+	0xf6, 0xe4, 0x89, 0x3a, 0x33, 0xae, 0x13, 0x67, 0xc6, 0xa5, 0x59, 0xca, 0x8b, 0x38, 0xb2, 0x57,
+	0x8a, 0x29, 0x2f, 0x62, 0x25, 0xe5, 0x45, 0x2c, 0xa5, 0x24, 0x6e, 0xab, 0x86, 0x94, 0x92, 0xaf,
+	0xe8, 0x01, 0xbf, 0x04, 0x8b, 0xae, 0x77, 0x97, 0xce, 0xdb, 0x5e, 0xa3, 0xee, 0x5b, 0xa2, 0x7b,
+	0xb6, 0x22, 0xcc, 0x99, 0x5b, 0xc3, 0xb7, 0xe0, 0x49, 0x1e, 0x29, 0xf3, 0x87, 0xd4, 0x7f, 0xa7,
+	0x90, 0x5e, 0x0d, 0xa2, 0xf8, 0x91, 0xe3, 0xef, 0x7a, 0x77, 0xf4, 0x26, 0xaf, 0x2b, 0xc7, 0x3f,
+	0x93, 0x0b, 0xc7, 0x3f, 0x93, 0x64, 0xe9, 0xc5, 0x3d, 0xde, 0x28, 0xa6, 0xd7, 0x6e, 0xb3, 0xe2,
+	0x07, 0x8f, 0xc1, 0xe3, 0x7c, 0x40, 0x74, 0x0c, 0x9b, 0x34, 0x4e, 0xbd, 0x30, 0x0d, 0x79, 0x20,
+	0x92, 0x0f, 0xfc, 0x05, 0x58, 0x6a, 0xf2, 0xd2, 0x6c, 0x7f, 0x92, 0x15, 0x24, 0xb1, 0x5c, 0x0b,
+	0x3b, 0x20, 0x98, 0xc2, 0x16, 0x58, 0xb9, 0xc0, 0x61, 0x38, 0x18, 0x0f, 0xc2, 0x68, 0xd0, 0xa5,
+	0x77, 0xa2, 0x46, 0xbd, 0x77, 0x79, 0x79, 0x92, 0xf5, 0x3c, 0x90, 0xea, 0x09, 0x7f, 0x07, 0xd6,
+	0x05, 0x11, 0xbb, 0xe1, 0x36, 0x0d, 0xf8, 0xa9, 0x2e, 0x60, 0xf1, 0x9e, 0xeb, 0x22, 0x90, 0xd5,
+	0x6e, 0xde, 0xe2, 0xee, 0xf0, 0xf2, 0xfd, 0xa4, 0x13, 0x79, 0x51, 0x1c, 0xda, 0x5b, 0xca, 0x6a,
+	0xcb, 0x6a, 0x61, 0xb5, 0x65, 0x05, 0x59, 0xed, 0xcb, 0xf7, 0x93, 0xb7, 0xd8, 0x0b, 0xa2, 0x63,
+	0xec, 0x45, 0x36, 0x52, 0x56, 0x5b, 0x54, 0x0a, 0xab, 0x2d, 0x8a, 0xc9, 0x45, 0xb9, 0xc2, 0x01,
+	0xb9, 0x64, 0x4f, 0x95, 0x8b, 0x92, 0x8a, 0x85, 0x8b, 0x92, 0x0a, 0xc8, 0x45, 0xb9, 0xc2, 0x01,
+	0xbb, 0x9b, 0x75, 0xe5, 0xa2, 0x08, 0x3a, 0x61, 0x9b, 0x04, 0x69, 0x96, 0xb2, 0x1d, 0x47, 0xf6,
+	0x76, 0x31, 0x65, 0x3b, 0x56, 0x52, 0xb6, 0x63, 0x29, 0x25, 0x71, 0xdb, 0x31, 0xa4, 0x94, 0x7c,
+	0x45, 0x0f, 0x72, 0x2d, 0xae, 0x70, 0x40, 0x8f, 0xe4, 0xae, 0x72, 0x2d, 0x32, 0xb9, 0x70, 0x2d,
+	0x32, 0x09, 0xd9, 0xa8, 0x2b, 0x1c, 0x88, 0xd7, 0x62, 0x4f, 0xd9, 0x28, 0x59, 0x2d, 0x6c, 0x94,
+	0xac, 0x80, 0x5f, 0x81, 0x87, 0x5f, 0x8f, 0xa7, 0xd1, 0xbd, 0xfd, 0xbf, 0xf4, 0x45, 0xfc, 0x4c,
+	0xfb, 0xca, 0xa7, 0x26, 0x3c, 0x48, 0xea, 0x72, 0xfc, 0x10, 0xcc, 0x75, 0xc7, 0x3d, 0xe7, 0xcf,
+	0x6b, 0x60, 0x53, 0x01, 0x84, 0x70, 0xea, 0x4f, 0x42, 0x0c, 0x4f, 0xc0, 0x62, 0x90, 0x3d, 0xe7,
+	0x48, 0xf1, 0xb9, 0x01, 0x29, 0x52, 0xab, 0x46, 0xfe, 0xe0, 0x72, 0xc7, 0x99, 0x54, 0x01, 0x5f,
+	0x80, 0x8d, 0x28, 0xf0, 0x26, 0x21, 0x79, 0xcb, 0x5e, 0x8f, 0xbc, 0x7b, 0x1c, 0x5c, 0x8f, 0x7c,
+	0xaf, 0x47, 0x01, 0xa0, 0xea, 0x42, 0xa6, 0x3b, 0x27, 0xaa, 0x73, 0xdf, 0xeb, 0xa1, 0xff, 0xae,
+	0x80, 0x05, 0x36, 0xca, 0x7d, 0x11, 0x44, 0x36, 0x64, 0x10, 0x49, 0x4d, 0x72, 0x12, 0xf9, 0x89,
+	0x44, 0x22, 0x9b, 0x0a, 0x89, 0x30, 0xdb, 0x14, 0x45, 0x0e, 0x0b, 0x28, 0xb2, 0xa5, 0x41, 0x11,
+	0xe6, 0xc4, 0x59, 0xe4, 0x40, 0x61, 0x91, 0x5a, 0x81, 0x45, 0x98, 0x53, 0x0e, 0x23, 0x07, 0x0a,
+	0x8c, 0xd4, 0x0a, 0x30, 0xc2, 0x5d, 0x32, 0x1a, 0x79, 0xa5, 0xd2, 0x88, 0x5d, 0xa4, 0x11, 0xe6,
+	0xc4, 0x70, 0xe4, 0xb0, 0x80, 0x23, 0x5b, 0x1a, 0x1c, 0xe1, 0x93, 0x62, 0x37, 0xeb, 0xb7, 0x7a,
+	0x1e, 0xd9, 0x31, 0xf1, 0x08, 0x0b, 0xa1, 0x00, 0xc9, 0x61, 0x01, 0x48, 0xb6, 0x34, 0x40, 0xc2,
+	0x07, 0xc0, 0x88, 0xe4, 0x48, 0x47, 0x24, 0x75, 0x3d, 0x91, 0x30, 0x77, 0x09, 0x49, 0x3e, 0x13,
+	0x90, 0x64, 0x5d, 0x42, 0x12, 0x66, 0x4f, 0x98, 0xe4, 0x48, 0xc7, 0x24, 0x75, 0x3d, 0x93, 0xf0,
+	0x44, 0xe2, 0x9d, 0x3c, 0x50, 0xa0, 0xa4, 0x56, 0x80, 0x12, 0xbe, 0x9b, 0x19, 0x95, 0x1c, 0xe9,
+	0xa8, 0xa4, 0xae, 0xa7, 0x12, 0x61, 0x76, 0x02, 0x96, 0x1c, 0x28, 0x58, 0x52, 0x2b, 0x60, 0x89,
+	0x94, 0x94, 0x60, 0xc5, 0x91, 0x8e, 0x4b, 0xea, 0x7a, 0x2e, 0x29, 0x26, 0x25, 0x11, 0xbe, 0x2a,
+	0x82, 0x09, 0xd2, 0x81, 0x09, 0xf3, 0x16, 0xc8, 0xe4, 0xcc, 0x40, 0x26, 0xbb, 0x46, 0x32, 0x61,
+	0x51, 0x54, 0x34, 0x79, 0xa5, 0xa2, 0x89, 0x5d, 0x44, 0x13, 0x7e, 0x17, 0x72, 0x36, 0x39, 0x33,
+	0xb0, 0xc9, 0xae, 0x91, 0x4d, 0xa4, 0x01, 0x88, 0x3b, 0xde, 0xd4, 0xc2, 0xc9, 0xb6, 0x01, 0x4e,
+	0x58, 0x18, 0x99, 0x4e, 0xbe, 0xd4, 0xd1, 0xc9, 0xa6, 0x42, 0x27, 0x7c, 0x1f, 0x44, 0x3c, 0x39,
+	0x37, 0xe1, 0xc9, 0x9e, 0x19, 0x4f, 0x58, 0xa4, 0x02, 0x9f, 0x7c, 0x5f, 0xc6, 0x27, 0xcf, 0xcb,
+	0xf9, 0x84, 0x45, 0xd5, 0x02, 0xca, 0x99, 0x01, 0x50, 0x76, 0x8d, 0x80, 0xc2, 0x97, 0x5c, 0x21,
+	0x94, 0xa6, 0x96, 0x50, 0xb6, 0x0d, 0x84, 0xc2, 0x97, 0x5c, 0x42, 0x94, 0x03, 0x05, 0x51, 0x6a,
+	0x05, 0x44, 0xe1, 0x97, 0x26, 0x63, 0x94, 0x23, 0x1d, 0xa3, 0xd4, 0xf5, 0x8c, 0xc2, 0x37, 0x4b,
+	0x84, 0x94, 0x03, 0x05, 0x52, 0x6a, 0x05, 0x48, 0x91, 0x92, 0xb6, 0x63, 0x29, 0x29, 0xa7, 0x94,
+	0xba, 0x9e, 0x52, 0x8a, 0x49, 0x49, 0x84, 0x57, 0x2a, 0xa6, 0xd8, 0x45, 0x4c, 0xe1, 0x57, 0x24,
+	0xe7, 0x94, 0x33, 0x03, 0xa7, 0xec, 0x1a, 0x39, 0x85, 0xef, 0x97, 0x02, 0x2a, 0xaf, 0x15, 0x50,
+	0x71, 0xca, 0x40, 0x85, 0x45, 0x91, 0x49, 0xe5, 0x18, 0xac, 0xa6, 0x6f, 0x13, 0xef, 0x5d, 0xd4,
+	0xc6, 0x61, 0xe8, 0xf5, 0x31, 0x6c, 0x80, 0xea, 0x38, 0xec, 0xe7, 0x78, 0x82, 0x1a, 0x72, 0x67,
+	0x45, 0xb0, 0x74, 0xa9, 0x9d, 0xd3, 0x01, 0x5b, 0x46, 0x34, 0x82, 0x35, 0xf0, 0x28, 0x4a, 0x39,
+	0x85, 0xe2, 0x44, 0xd5, 0x9d, 0x8f, 0x28, 0xa3, 0xc0, 0x6d, 0x00, 0x7a, 0x78, 0xe4, 0xdd, 0x5f,
+	0x47, 0x83, 0x31, 0xa6, 0xfc, 0x50, 0x75, 0x17, 0xa9, 0xe4, 0x72, 0x30, 0xc6, 0xce, 0xcf, 0x00,
+	0x32, 0x4f, 0xc3, 0x18, 0xf5, 0xe5, 0xdf, 0x9e, 0x82, 0xea, 0xe5, 0x60, 0x98, 0xc0, 0x57, 0xe0,
+	0x61, 0x2b, 0x21, 0x67, 0x43, 0xd7, 0x47, 0x41, 0x5a, 0xa6, 0x71, 0x2c, 0x78, 0x08, 0xe6, 0x5b,
+	0x09, 0xdd, 0x27, 0x6d, 0x53, 0x05, 0xe9, 0x01, 0xc7, 0xb1, 0x60, 0x13, 0x80, 0x56, 0xc2, 0x78,
+	0xc5, 0xd8, 0x61, 0x41, 0x66, 0xe0, 0x71, 0x2c, 0xf8, 0x3d, 0x58, 0x6b, 0x25, 0x6a, 0xe9, 0x98,
+	0xf5, 0x39, 0x84, 0x66, 0x16, 0x24, 0xc7, 0x82, 0x3d, 0xb0, 0xd9, 0xba, 0xd2, 0x95, 0x8f, 0x8f,
+	0xf9, 0x36, 0x42, 0x1f, 0x55, 0xa0, 0x1c, 0x0b, 0x7e, 0x0b, 0x9e, 0xb4, 0x12, 0xa9, 0x1a, 0x94,
+	0x7e, 0xde, 0xa0, 0xf2, 0xd2, 0xe2, 0x58, 0xf0, 0x3b, 0xb0, 0xda, 0x4a, 0x94, 0x2a, 0x35, 0xe3,
+	0xcb, 0x0b, 0xcd, 0x2a, 0x7c, 0x8e, 0x05, 0x7f, 0x05, 0x16, 0x5a, 0x49, 0xc6, 0x89, 0x86, 0xb6,
+	0x16, 0x32, 0x21, 0x66, 0xee, 0x9e, 0x31, 0xa3, 0xa1, 0xc7, 0x85, 0x4c, 0xb8, 0xe9, 0x58, 0xf0,
+	0x08, 0x2c, 0xb6, 0x92, 0x9c, 0x1e, 0x4d, 0x0d, 0x2f, 0x64, 0x64, 0xcf, 0xfc, 0xb0, 0xb1, 0xe2,
+	0x67, 0xec, 0x7e, 0x21, 0x33, 0x88, 0x3a, 0x16, 0x74, 0xc1, 0x4a, 0x16, 0x84, 0x1d, 0x86, 0xf2,
+	0x56, 0x18, 0x9a, 0x41, 0xa6, 0xf9, 0xc0, 0x18, 0x5f, 0x1a, 0xfb, 0x62, 0xc8, 0x0c, 0xa8, 0x8e,
+	0x05, 0xcf, 0xc1, 0x72, 0x2b, 0x11, 0x29, 0xb3, 0xac, 0x49, 0x86, 0x4a, 0x79, 0xd5, 0xb1, 0xe0,
+	0x01, 0xa8, 0xb6, 0x92, 0xd3, 0x26, 0xd4, 0x74, 0xcc, 0x90, 0x0e, 0x59, 0xf3, 0x01, 0x88, 0x85,
+	0xb6, 0xac, 0x7d, 0x86, 0x4a, 0x39, 0xd6, 0xb1, 0xe0, 0xeb, 0x1c, 0x5d, 0xa1, 0xa1, 0x93, 0x86,
+	0x4c, 0x30, 0xeb, 0x58, 0xf0, 0x1b, 0x09, 0x62, 0x61, 0x59, 0x53, 0x0d, 0x95, 0xb2, 0x2d, 0x1b,
+	0x08, 0x61, 0x4c, 0x43, 0x7f, 0x0d, 0x99, 0x00, 0x57, 0x1e, 0x08, 0x89, 0x50, 0xd6, 0x6a, 0x43,
+	0xa5, 0xbc, 0xeb, 0x58, 0xe4, 0x1b, 0x98, 0x33, 0xab, 0xb9, 0xeb, 0x86, 0x4a, 0xb8, 0xd7, 0xb1,
+	0x60, 0x47, 0x85, 0x5d, 0x38, 0xa3, 0x01, 0x87, 0x66, 0x61, 0xb0, 0x63, 0xc1, 0x37, 0x0c, 0x7b,
+	0xa1, 0xa9, 0x17, 0x87, 0x8c, 0x24, 0xcc, 0x06, 0x25, 0x9e, 0x9d, 0x19, 0x6d, 0x39, 0x34, 0x0b,
+	0x8d, 0x1d, 0x0b, 0xb6, 0x65, 0x14, 0x86, 0xa5, 0x1d, 0x3a, 0x54, 0x8e, 0xc8, 0xe9, 0x39, 0xc8,
+	0xc0, 0xcb, 0xd0, 0x3e, 0x42, 0x26, 0x66, 0x4b, 0xcf, 0x81, 0x08, 0x5e, 0x65, 0x9d, 0x24, 0x54,
+	0x8a, 0x70, 0x6c, 0x20, 0xed, 0x58, 0x19, 0x48, 0x3b, 0xd6, 0x0f, 0xa4, 0x1d, 0x1b, 0x06, 0xd2,
+	0x8e, 0x75, 0x03, 0x69, 0xc7, 0x25, 0x03, 0x91, 0x63, 0xbd, 0x61, 0x24, 0x07, 0x4d, 0xad, 0x26,
+	0x64, 0x84, 0xbb, 0x74, 0xd7, 0x15, 0x34, 0x9b, 0xd1, 0x75, 0x42, 0xb3, 0x68, 0xcf, 0xb1, 0xe0,
+	0x35, 0x80, 0xdf, 0x4d, 0x42, 0xef, 0x1d, 0x3e, 0xc1, 0x61, 0x14, 0xf8, 0xf7, 0x69, 0x60, 0x87,
+	0x39, 0x16, 0x95, 0x79, 0xf0, 0x4f, 0x4b, 0x6d, 0x58, 0x02, 0x0c, 0x36, 0x5c, 0xdc, 0x1f, 0x84,
+	0x11, 0x0e, 0x48, 0xcd, 0xfc, 0xf6, 0x26, 0x45, 0x3c, 0xf8, 0x5c, 0xa8, 0xa8, 0x45, 0x75, 0x9e,
+	0xe4, 0xb3, 0x19, 0x56, 0x2c, 0xcd, 0x1f, 0xc0, 0x1a, 0x7d, 0x11, 0x4b, 0x39, 0x9e, 0xc9, 0x2f,
+	0x69, 0x5d, 0x02, 0xa7, 0xcc, 0x44, 0x5c, 0x25, 0x17, 0x8f, 0xfd, 0xb4, 0xec, 0xb3, 0xf0, 0x8e,
+	0x30, 0x38, 0x55, 0x59, 0x5c, 0x25, 0x9d, 0x0d, 0x4b, 0xf0, 0x7b, 0xb0, 0x7a, 0x71, 0x7b, 0x1f,
+	0x0e, 0xba, 0xde, 0x88, 0xbd, 0xd8, 0x04, 0xe2, 0x52, 0x54, 0x79, 0xf0, 0x67, 0x25, 0x16, 0x2c,
+	0xf4, 0x2f, 0xa5, 0xaf, 0x53, 0xa8, 0xed, 0x9a, 0x23, 0xfd, 0xd7, 0x2a, 0xad, 0xa2, 0x6b, 0x82,
+	0x77, 0x27, 0x0a, 0xb0, 0x37, 0xfe, 0x81, 0x31, 0x5e, 0x54, 0x60, 0x3b, 0xe3, 0x7f, 0x71, 0x20,
+	0x5b, 0x92, 0x79, 0xfa, 0xae, 0x67, 0x25, 0x59, 0xa3, 0x12, 0xc2, 0xbd, 0x06, 0x55, 0xf2, 0x7d,
+	0x00, 0x4b, 0x3e, 0x1a, 0xd0, 0xba, 0xa2, 0x3b, 0xf1, 0x27, 0xd8, 0xb1, 0xf6, 0x2b, 0xf0, 0x0d,
+	0x58, 0x64, 0xdf, 0x22, 0xd0, 0x96, 0x3e, 0x66, 0x3e, 0xca, 0xff, 0x37, 0x60, 0xa1, 0x33, 0xf1,
+	0xa6, 0xe1, 0xad, 0x4f, 0xc0, 0x53, 0x36, 0xca, 0x15, 0xcd, 0xdb, 0x78, 0x32, 0x34, 0x87, 0xf8,
+	0x06, 0x2c, 0x75, 0xa6, 0x23, 0x42, 0x7b, 0xfd, 0x81, 0x3f, 0x11, 0xaa, 0x8a, 0x20, 0x2d, 0x56,
+	0x15, 0x49, 0x29, 0xbd, 0xe6, 0xb0, 0xd7, 0x3b, 0x9b, 0xf4, 0xf0, 0x7b, 0xf1, 0x35, 0x97, 0xcb,
+	0x34, 0xaf, 0x39, 0xae, 0x12, 0x8b, 0x7f, 0x3b, 0xe9, 0x76, 0x4f, 0x71, 0x74, 0x7c, 0xdf, 0xc2,
+	0xf7, 0x42, 0xf1, 0x17, 0xc5, 0xc5, 0xe2, 0x2f, 0x6b, 0xc5, 0xe3, 0xcc, 0x34, 0x9d, 0xc8, 0x0b,
+	0xa2, 0xcb, 0x50, 0x38, 0xce, 0xaa, 0xaa, 0x78, 0x9c, 0x8b, 0x16, 0x02, 0x50, 0x2e, 0x4b, 0x5f,
+	0x6c, 0xb0, 0x5e, 0xf6, 0x5b, 0x39, 0xda, 0x2e, 0x6d, 0x7b, 0x93, 0xdd, 0x78, 0x51, 0x39, 0xfe,
+	0xfc, 0x5f, 0x7f, 0x59, 0xa8, 0xfc, 0xf5, 0xc3, 0x4e, 0xe5, 0x1f, 0x1f, 0x76, 0x2a, 0xff, 0xfe,
+	0xb0, 0x53, 0xf9, 0xd3, 0x7f, 0x76, 0x2c, 0xb0, 0xea, 0x07, 0x7d, 0xea, 0xdd, 0x18, 0x26, 0xf4,
+	0x17, 0xfc, 0x9b, 0x79, 0xfa, 0xe7, 0x8b, 0xff, 0x07, 0x00, 0x00, 0xff, 0xff, 0xee, 0x78, 0xcd,
+	0xb0, 0x3e, 0x20, 0x00, 0x00,
 }

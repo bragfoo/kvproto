@@ -22,6 +22,7 @@ message RaftMessage {
     bytes end_key = 8;
     // If it has value, to_peer should be removed if merge is never going to complete.
     metapb.Region merge_target = 9;
+    ExtraMessage extra_msg = 10;
 }
 
 message RaftTruncatedState {
@@ -71,6 +72,9 @@ message RaftLocalState {
 
 message RaftApplyState {
     uint64 applied_index = 1;
+    uint64 last_commit_index = 3;
+    uint64 commit_index = 4;
+    uint64 commit_term = 5;
     RaftTruncatedState truncated_state = 2;
 }
 
@@ -91,4 +95,17 @@ message RegionLocalState {
     PeerState state = 1;
     metapb.Region region = 2;
     MergeState merge_state = 3;
+}
+
+enum ExtraMessageType {
+    MsgRegionWakeUp = 0;
+    MsgWantRollbackMerge = 1;
+    MsgCheckStalePeer = 2;
+    MsgCheckStalePeerResponse = 3;
+}
+
+message ExtraMessage {
+    ExtraMessageType type = 1;
+    uint64 premerge_commit = 2;
+    repeated metapb.Peer check_peers = 3;
 }
